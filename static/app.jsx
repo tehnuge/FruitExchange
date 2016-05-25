@@ -14,7 +14,7 @@ var App = React.createClass({
 		//return inventory of items
 		return(
 			<div>
-				<h1>Your Profile</h1>
+				<h1>Your Profile!!</h1>
 				<Inventory />
 			</div>
 			)
