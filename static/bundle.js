@@ -46,18 +46,29 @@
 
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(38);
-	//console.log(window.title)
+	var Inventory = __webpack_require__(168);
+	
 	var App = React.createClass({
 		displayName: 'App',
 	
 	
 		render: function () {
-			console.log(title);
-			var title1 = title.title;
+			//helper function for iterating through object
+			mapObject = function (object, callback) {
+				return Object.keys(object).map(function (key) {
+					return callback(key, object[key]);
+				});
+			};
+			//return inventory of items
 			return React.createElement(
 				'div',
 				null,
-				title1
+				React.createElement(
+					'h1',
+					null,
+					'Your Profile'
+				),
+				React.createElement(Inventory, null)
 			);
 		}
 	});
@@ -20338,6 +20349,40 @@
 	var ReactMount = __webpack_require__(160);
 	
 	module.exports = ReactMount.renderSubtreeIntoContainer;
+
+/***/ },
+/* 168 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	
+	var Inventory = React.createClass({
+		displayName: 'Inventory',
+	
+		render: function () {
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'h3',
+					null,
+					'Inventory:'
+				),
+				mapObject(inventory, function (key, value) {
+					return React.createElement(
+						'div',
+						{ key: key },
+						'item: ',
+						key,
+						' Amount: ',
+						value
+					);
+				})
+			);
+		}
+	});
+	
+	module.exports = Inventory;
 
 /***/ }
 /******/ ]);

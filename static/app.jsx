@@ -1,15 +1,23 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
-//console.log(window.title)
+var Inventory = require('./inventory')
+
 var App = React.createClass({
 
 	render: function(){
-		console.log(title)
-		var title1 = title.title
+		//helper function for iterating through object
+		mapObject = function(object, callback) {
+		  return Object.keys(object).map(function (key) {
+		    return callback(key, object[key]);
+		  });
+		}
+		//return inventory of items
 		return(
 			<div>
-			{title1}
-			</div>)
+				<h1>Your Profile</h1>
+				<Inventory />
+			</div>
+			)
 	}
 })
 
