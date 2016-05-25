@@ -2,9 +2,14 @@ var React = require('react')
 var ReactDOM = require('react-dom')
 //console.log(window.title)
 var App = React.createClass({
+
 	render: function(){
+		console.log(title)
+		var title1 = title.title
 		return(
-			<div>{title}</div>)
+			<div>
+			{title1}
+			</div>)
 	}
 })
 

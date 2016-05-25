@@ -50,11 +50,14 @@
 	var App = React.createClass({
 		displayName: 'App',
 	
+	
 		render: function () {
+			console.log(title);
+			var title1 = title.title;
 			return React.createElement(
 				'div',
 				null,
-				title
+				title1
 			);
 		}
 	});
