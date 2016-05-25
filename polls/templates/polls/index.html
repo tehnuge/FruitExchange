@@ -1,3 +1,13 @@
+	{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test app</title>
+
+	<script src="{% static "bundle.js" %}"></script>
+</head>
+<body>
+<div id="root">this is original</div>
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
@@ -7,3 +17,8 @@
 {% else %}
     <p>No polls are available.</p>
 {% endif %}
+<script>
+	window.title = {{title| safe}}
+</script>
+</body>
+</html>
