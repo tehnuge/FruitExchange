@@ -54,12 +54,7 @@
 	
 		render: function () {
 			console.log(inventory);
-			//helper function for iterating through object
-			mapObject = function (object, callback) {
-				return Object.keys(object).map(function (key) {
-					return callback(key, object[key]);
-				});
-			};
+	
 			//return inventory of items
 			return React.createElement(
 				'div',
@@ -20384,10 +20379,6 @@
 	});
 	
 	module.exports = Inventory;
-	/*
-					mapObject(single, function (key, amount) {
-				  return <div key={key}>item: {key} Amount: {amount}</div>;
-				})*/
 
 /***/ }
 /******/ ]);

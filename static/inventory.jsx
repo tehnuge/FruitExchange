@@ -18,7 +18,3 @@ var Inventory = React.createClass({
 })
 
 module.exports = Inventory
-/*
-				mapObject(single, function (key, amount) {
-			  return <div key={key}>item: {key} Amount: {amount}</div>;
-			})*/

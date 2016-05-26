@@ -7,10 +7,10 @@ from django.template import RequestContext
 from django.shortcuts import render, get_object_or_404, render_to_response
 
 def index(request):
-	# FROM TUT: latest_question_list = Question.objects.order_by('-pub_date')[:5]
+	latest_question_list = Question.objects.order_by('-pub_date')[:5]
 	inventory = []
 	#iterate over Produce and append to inventory array
-	for prod in Produce.objects.all():
+	for prod in Produce.objects.filter(creator=request.user.id):
 		single = {}
 		single["name"] = prod.produce_text
 		single["amount"] = prod.quantity
