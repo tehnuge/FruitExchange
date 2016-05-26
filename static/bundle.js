@@ -53,6 +53,7 @@
 	
 	
 		render: function () {
+			console.log(inventory);
 			//helper function for iterating through object
 			mapObject = function (object, callback) {
 				return Object.keys(object).map(function (key) {
@@ -66,7 +67,7 @@
 				React.createElement(
 					'h1',
 					null,
-					'Your Profile'
+					'Your Profile!!'
 				),
 				React.createElement(Inventory, null)
 			);
@@ -20368,14 +20369,14 @@
 					null,
 					'Inventory:'
 				),
-				mapObject(inventory, function (key, value) {
+				inventory.map(function (single) {
 					return React.createElement(
 						'div',
-						{ key: key },
-						'item: ',
-						key,
+						{ key: single.name },
+						'Item: ',
+						single.name,
 						' Amount: ',
-						value
+						single.amount
 					);
 				})
 			);
@@ -20383,6 +20384,10 @@
 	});
 	
 	module.exports = Inventory;
+	/*
+					mapObject(single, function (key, amount) {
+				  return <div key={key}>item: {key} Amount: {amount}</div>;
+				})*/
 
 /***/ }
 /******/ ]);

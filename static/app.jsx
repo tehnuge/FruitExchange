@@ -5,6 +5,7 @@ var Inventory = require('./inventory')
 var App = React.createClass({
 
 	render: function(){
+		console.log(inventory)
 		//helper function for iterating through object
 		mapObject = function(object, callback) {
 		  return Object.keys(object).map(function (key) {
