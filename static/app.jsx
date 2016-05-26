@@ -17,7 +17,9 @@ var App = React.createClass({
 	}
 })
 
-document.addEventListener("DOMContentLoaded", function(){
+module.exports = App
+/*document.addEventListener("DOMContentLoaded", function(){
 	ReactDOM.render(<App />, document.getElementById('root'))
 	
 })
+*/

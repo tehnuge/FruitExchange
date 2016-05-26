@@ -1,6 +1,6 @@
 module.exports = {
   context: __dirname,
-  entry: "./static/app.jsx",
+  entry: "./static/index.jsx",
   output: {
     path: "./static",
     filename: "bundle.js"
@@ -12,7 +12,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel',
         query: {
-          presets: ['react']
+          presets: ['react', 'es2015']
         }
       }
     ]
