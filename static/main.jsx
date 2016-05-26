@@ -2,7 +2,7 @@ var React = require('react')
 var ReactDOM = require('react-dom')
 var Inventory = require('./inventory')
 
-var App = React.createClass({
+var Main = React.createClass({
 
 	render: function(){
 		console.log(inventory)
@@ -10,11 +10,11 @@ var App = React.createClass({
 		//return inventory of items
 		return(
 			<div>
-				<h1>Your Profile!!</h1>
+				<h1>Feed</h1>
 				<Inventory />
 			</div>
 			)
 	}
 })
 
-module.exports = App
+module.exports = Main

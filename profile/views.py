@@ -20,7 +20,7 @@ def index(request):
 		'latest_question_list': latest_question_list,
 		'inventory': json.dumps(inventory)
 	}
-	return render_to_response('profile/index.html', RequestContext(request, context))
+	return render_to_response('index.html', RequestContext(request, context))
 
 def detail(request, question_id):
 	question = get_object_or_404(Question, pk = question_id)

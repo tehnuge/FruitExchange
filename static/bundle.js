@@ -20374,11 +20374,6 @@
 	});
 	
 	module.exports = App;
-	/*document.addEventListener("DOMContentLoaded", function(){
-		ReactDOM.render(<App />, document.getElementById('root'))
-		
-	})
-	*/
 
 /***/ },
 /* 169 */
@@ -25943,9 +25938,51 @@
 	
 	var _app2 = _interopRequireDefault(_app);
 	
+	var _main = __webpack_require__(232);
+	
+	var _main2 = _interopRequireDefault(_main);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	module.exports = _react2.default.createElement(_reactRouter.Route, { path: '/profile', component: _app2.default });
+	module.exports = _react2.default.createElement(
+			'div',
+			null,
+			_react2.default.createElement(_reactRouter.Route, { path: '/', component: _main2.default }),
+			_react2.default.createElement(_reactRouter.Route, { path: '/profile', component: _app2.default })
+	);
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(38);
+	var Inventory = __webpack_require__(169);
+	
+	var Main = React.createClass({
+		displayName: 'Main',
+	
+	
+		render: function render() {
+			console.log(inventory);
+	
+			//return inventory of items
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'h1',
+					null,
+					'Feed'
+				),
+				React.createElement(Inventory, null)
+			);
+		}
+	});
+	
+	module.exports = Main;
 
 /***/ }
 /******/ ]);
