@@ -50,10 +50,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _app = __webpack_require__(168);
-	
-	var _app2 = _interopRequireDefault(_app);
-	
 	var _reactRouter = __webpack_require__(170);
 	
 	var _routes = __webpack_require__(231);
@@ -63,7 +59,8 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ReactDOM = __webpack_require__(38);
-	
+	/*import App from './app'
+	*/
 	
 	document.addEventListener("DOMContentLoaded", function () {
 		ReactDOM.render(_react2.default.createElement(_reactRouter.Router, { routes: _routes2.default, history: _reactRouter.browserHistory }), document.getElementById('root'));
@@ -20343,41 +20340,7 @@
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
 /***/ },
-/* 168 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	var ReactDOM = __webpack_require__(38);
-	var Inventory = __webpack_require__(169);
-	var Submission = __webpack_require__(234);
-	
-	var App = React.createClass({
-		displayName: 'App',
-	
-	
-		render: function render() {
-			console.log(inventory);
-	
-			//return inventory of items
-			return React.createElement(
-				'div',
-				null,
-				React.createElement(
-					'h1',
-					null,
-					'Your Profile!!'
-				),
-				React.createElement(Inventory, null),
-				React.createElement(Submission, null)
-			);
-		}
-	});
-	
-	module.exports = App;
-
-/***/ },
+/* 168 */,
 /* 169 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -25936,9 +25899,9 @@
 	
 	var _reactRouter = __webpack_require__(170);
 	
-	var _app = __webpack_require__(168);
+	var _profile = __webpack_require__(235);
 	
-	var _app2 = _interopRequireDefault(_app);
+	var _profile2 = _interopRequireDefault(_profile);
 	
 	var _main = __webpack_require__(232);
 	
@@ -25954,7 +25917,7 @@
 			'div',
 			null,
 			_react2.default.createElement(_reactRouter.Route, { path: '/', component: _main2.default }),
-			_react2.default.createElement(_reactRouter.Route, { path: '/profile', component: _app2.default }),
+			_react2.default.createElement(_reactRouter.Route, { path: '/profile', component: _profile2.default }),
 			_react2.default.createElement(_reactRouter.Route, { path: '/login', component: _login2.default })
 	);
 
@@ -26080,6 +26043,41 @@
 	});
 	
 	module.exports = Submission;
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(38);
+	var Inventory = __webpack_require__(169);
+	var Submission = __webpack_require__(234);
+	
+	var Profile = React.createClass({
+		displayName: 'Profile',
+	
+	
+		render: function render() {
+			console.log(inventory);
+	
+			//return inventory of items
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'h1',
+					null,
+					'Your Profile!!'
+				),
+				React.createElement(Inventory, null),
+				React.createElement(Submission, null)
+			);
+		}
+	});
+	
+	module.exports = Profile;
 
 /***/ }
 /******/ ]);

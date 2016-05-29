@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom')
 var Inventory = require('./inventory')
 var Submission = require('./submission')
 
-var App = React.createClass({
+var Profile = React.createClass({
 
 	render: function(){
 		console.log(inventory)
@@ -19,4 +19,4 @@ var App = React.createClass({
 	}
 })
 
-module.exports = App
+module.exports = Profile
