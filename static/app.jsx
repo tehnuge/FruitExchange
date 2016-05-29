@@ -1,6 +1,7 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
 var Inventory = require('./inventory')
+var Submission = require('./submission')
 
 var App = React.createClass({
 
@@ -12,6 +13,7 @@ var App = React.createClass({
 			<div>
 				<h1>Your Profile!!</h1>
 				<Inventory />
+				<Submission />
 			</div>
 			)
 	}

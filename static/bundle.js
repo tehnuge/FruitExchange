@@ -20351,6 +20351,7 @@
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(38);
 	var Inventory = __webpack_require__(169);
+	var Submission = __webpack_require__(234);
 	
 	var App = React.createClass({
 		displayName: 'App',
@@ -20368,7 +20369,8 @@
 					null,
 					'Your Profile!!'
 				),
-				React.createElement(Inventory, null)
+				React.createElement(Inventory, null),
+				React.createElement(Submission, null)
 			);
 		}
 	});
@@ -25942,13 +25944,18 @@
 	
 	var _main2 = _interopRequireDefault(_main);
 	
+	var _login = __webpack_require__(233);
+	
+	var _login2 = _interopRequireDefault(_login);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	module.exports = _react2.default.createElement(
 			'div',
 			null,
 			_react2.default.createElement(_reactRouter.Route, { path: '/', component: _main2.default }),
-			_react2.default.createElement(_reactRouter.Route, { path: '/profile', component: _app2.default })
+			_react2.default.createElement(_reactRouter.Route, { path: '/profile', component: _app2.default }),
+			_react2.default.createElement(_reactRouter.Route, { path: '/login', component: _login2.default })
 	);
 
 /***/ },
@@ -25983,6 +25990,96 @@
 	});
 	
 	module.exports = Main;
+
+/***/ },
+/* 233 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var Login = React.createClass({
+		displayName: "Login",
+	
+		render: function render() {
+			return React.createElement(
+				"div",
+				null,
+				React.createElement(
+					"form",
+					{ method: "post", action: "/login" },
+					React.createElement("input", { type: "hidden", name: "csrfmiddlewaretoken", value: cookie }),
+					React.createElement(
+						"label",
+						{ "for": "username" },
+						React.createElement(
+							"h3",
+							null,
+							"Account Name"
+						)
+					),
+					React.createElement("input", { id: "username", name: "username", type: "text",
+						placeholder: "Your account name",
+						autocomplete: "off" }),
+					React.createElement(
+						"label",
+						{ "for": "password" },
+						React.createElement(
+							"h3",
+							null,
+							"Password"
+						)
+					),
+					React.createElement("input", { id: "password", name: "password", type: "password",
+						placeholder: "Your password",
+						autocomplete: "off" }),
+					React.createElement("input", { type: "submit", "class": "button", value: "Login" })
+				)
+			);
+		}
+	});
+	
+	module.exports = Login;
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var React = __webpack_require__(1);
+	
+	var Submission = React.createClass({
+		displayName: "Submission",
+	
+		render: function render() {
+			var createFruit = function createFruit(fruit) {};
+			return React.createElement(
+				"div",
+				null,
+				React.createElement(
+					"label",
+					null,
+					"Fruits: "
+				),
+				React.createElement("input", { id: "fruits" }),
+				React.createElement(
+					"label",
+					null,
+					"Quantity: "
+				),
+				React.createElement("input", { id: "qty" }),
+				React.createElement(
+					"button",
+					null,
+					"submit"
+				)
+			);
+		}
+	});
+	
+	module.exports = Submission;
 
 /***/ }
 /******/ ]);

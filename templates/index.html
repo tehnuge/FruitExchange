@@ -10,7 +10,8 @@
 <div id="root">this is original</div>
 
 <script>
-	window.inventory = {{inventory| safe}}
+	inventory = {{inventory| safe}}
+    window.cookie = '{{ csrf_token }}';
 </script>
 </body>
 </html>
