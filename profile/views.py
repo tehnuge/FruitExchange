@@ -9,13 +9,21 @@ from django.shortcuts import render, get_object_or_404, render_to_response
 def index(request):
 	latest_question_list = Question.objects.order_by('-pub_date')[:5]
 	inventory = []
-	#iterate over Produce and append to inventory array
+	#if submit, save new item
+	if request.method =="POST":
+		item = request.POST['item']
+		qty = request.POST['qty']
+		creator = request.user
+		newItem = Produce(creator = creator, produce_text = item, quantity = qty)
+		newItem.save()
+
+	#show user's inventory: iterate over Produce and append to inventory array
 	for prod in Produce.objects.filter(creator=request.user.id):
 		single = {}
+		single["id"] = prod.id
 		single["name"] = prod.produce_text
 		single["amount"] = prod.quantity
 		inventory.append(single)
-
 	context = {
 		'latest_question_list': latest_question_list,
 		'inventory': json.dumps(inventory)
