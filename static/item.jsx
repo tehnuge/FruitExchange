@@ -34,12 +34,11 @@ var Item = React.createClass({
 	},
 	render: function(){
 		return(
-			<div>
+			<li>
 				<p> 
 					<label onDoubleClick={this.handleEdit}> 
 					item: {this.props.name}
-					</label> 
-					amount: {this.props.amount}
+					</label> amount: {this.props.amount}
 				</p>
 				<input
 					ref="editField"
@@ -49,7 +48,7 @@ var Item = React.createClass({
 					onBlur={this.handleSubmit}
 
 				/>
-			</div>
+			</li>
 			)
 	}
 })

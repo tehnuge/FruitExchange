@@ -25953,9 +25953,10 @@
 			};
 		},
 		save: function save(itemToSave, text) {
-			//this.props.model.save(todoToSave, text);
-			var thing = $.put('/profile/modify_item/', itemToSave);
-			console.log(thing);
+			var postUrl = '/profile/modify_item/';
+			itemToSave["newText"] = text;
+			$.post(postUrl, itemToSave);
+			console.log("id is: ", itemToSave.id, "text: ", text);
 			this.setState({ editing: null });
 		},
 		edit: function edit(item) {
@@ -26039,7 +26040,7 @@
 		},
 		render: function render() {
 			return React.createElement(
-				'div',
+				'li',
 				null,
 				React.createElement(
 					'p',
@@ -26050,7 +26051,7 @@
 						'item: ',
 						this.props.name
 					),
-					'amount: ',
+					' amount: ',
 					this.props.amount
 				),
 				React.createElement('input', {

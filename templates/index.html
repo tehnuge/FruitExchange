@@ -32,9 +32,10 @@
     };
 
     $.ajaxSetup({
-      async: true,
-      contentType : 'application/json',
-      processData : false,
+      //these settings dont work for the ajax call to edit items
+      //async: true,
+      //contentType : 'application/json',
+      //processData : false,
       beforeSend: function(xhr, settings) {
           if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
               xhr.setRequestHeader("X-CSRFToken", cookie);

@@ -3,7 +3,7 @@ from django.http import HttpResponse, Http404
 from .models import Produce
 from django.template import RequestContext
 
-from django.shortcuts import render, get_object_or_404, render_to_response
+from django.shortcuts import render, get_object_or_404, render_to_response, redirect
 
 def index(request):
 	inventory = []
@@ -28,14 +28,14 @@ def index(request):
 	return render_to_response('index.html', RequestContext(request, context))
 
 def modify_item(request):
-	if request.method =="POST":
-	    # data = {'user_id': request.itemToSave.id,
-	    #         'name': request.user.username}
-	    #data = json.dumps(itemToSave)
-		#print "helllooo"
-		data = request.POST.get('amount')
+	if request.is_ajax():
+		itemid = request.POST.get('id')
+		newText = request.POST.get('newText')
+		quantity = request.POST.get('quantity')
+		i = Produce.objects.select_for_update().get(id=itemid)	
+		if newText is not i.produce_text:
+			i.produce_text = newText
+			print newText
+		i.save()
 
-	return HttpResponse(json.dumps(data), content_type='application/json')
-
-#tried dumping to this did not workkkk	
-#request.POST['data']
+	return HttpResponse(json.dumps(itemid), content_type='application/json')
