@@ -10,18 +10,20 @@ from django.utils.http import is_safe_url
 from django.shortcuts import render, get_object_or_404, render_to_response,resolve_url
 
 def main(request):
-	inventory = []
+    print "hello"
+    print Produce.objects.all()
+    inventory = []
 	#iterate over Produce and append to inventory array
-	for prod in Produce.objects.all():
-		single = {}
-		single["name"] = prod.produce_text
-		single["amount"] = prod.quantity
-		inventory.append(single)
-
-	context = {
-		'inventory': json.dumps(inventory)
-	}
-	return render_to_response('index.html', RequestContext(request, context))
+    for prod in Produce.objects.all():
+        single = {}
+        single["id"] = prod.id
+        single["name"] = prod.produce_text
+        single["amount"] = prod.quantity
+        inventory.append(single)
+    context = {
+        'inventory': json.dumps(inventory)
+    }
+    return render_to_response('index.html', RequestContext(request, context))
 
 def login(request, template_name='index.html',
           redirect_field_name='REDIRECT_FIELD_NAME',
