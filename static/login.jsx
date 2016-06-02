@@ -14,7 +14,7 @@ var Login = React.createClass({
 		       <input id="password" name="password" type="password"
 		              placeholder="Your password"
 		              autocomplete="off" />
-		              <input type="submit" class="button" value="Login" />
+		              <input type="submit" class="button" />
 		       </form>
 			</div>
 		)

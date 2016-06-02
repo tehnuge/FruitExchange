@@ -14,6 +14,7 @@ var Profile = React.createClass({
 				<h1>Your Profile!!</h1>
 				<Inventory />
 				<Submission />
+				{this.props.children}
 			</div>
 			)
 	}

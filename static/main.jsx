@@ -10,7 +10,7 @@ var Main = React.createClass({
 		//return inventory of items
 		return(
 			<div>
-				<h1>Feed</h1>
+				<h1>All Produce</h1>
 				<Inventory />
 			</div>
 			)

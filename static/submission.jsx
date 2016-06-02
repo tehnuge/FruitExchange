@@ -8,11 +8,14 @@ var Submission = React.createClass({
 		}
 		return(
 			<div>
-				<label>Fruits: </label>
-					<input id="fruits"/>
-				<label>Quantity: </label>
-					<input id="qty"/>
-				<button>submit</button>
+			<form method="post" action="/profile/">
+				<input type="hidden" name="csrfmiddlewaretoken" value={cookie} />
+					<label>Item: </label>
+						<input id="item" name="item" type="text" />
+					<label>Qty: </label>
+						<input id="qty" name="qty"/>
+					<input type="submit" class="button"/>
+				</form>
 			</div>
 			);
  	}

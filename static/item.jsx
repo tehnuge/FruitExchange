@@ -14,6 +14,17 @@ var Item = React.createClass({
 			this.setState({editText: event.target.value});
 		}
 	},
+	handleSubmit: function(event){
+		var val = this.state.editText.trim()
+		if(val){
+			this.props.onSave(val)
+			this.setState({editText: val})
+		}
+		else{
+			//do nothing for now.....
+			//this.props.onDestroy()
+		}
+	},
 	componentDidUpdate: function (prevProps) {
 		if (!prevProps.editing && this.props.editing) {
 			var node = ReactDOM.findDOMNode(this.refs.editField);
@@ -35,6 +46,7 @@ var Item = React.createClass({
 					className="edit"
 					value={this.state.editText}
 					onChange={this.handleChange}
+					onBlur={this.handleSubmit}
 
 				/>
 			</div>

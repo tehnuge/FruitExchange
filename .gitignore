@@ -1,1 +1,5 @@
+.DS_Store
+static/todo/
 node_modules/
+/static/bundle.js
+/static/bundle.js.map

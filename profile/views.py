@@ -27,5 +27,15 @@ def index(request):
 	}
 	return render_to_response('index.html', RequestContext(request, context))
 
+def modify_item(request):
+	if request.method =="POST":
+	    # data = {'user_id': request.itemToSave.id,
+	    #         'name': request.user.username}
+	    #data = json.dumps(itemToSave)
+		#print "helllooo"
+		data = request.POST.get('amount')
 
+	return HttpResponse(json.dumps(data), content_type='application/json')
 
+#tried dumping to this did not workkkk	
+#request.POST['data']

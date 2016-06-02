@@ -10,6 +10,12 @@ var Inventory = React.createClass({
 			newItem: ''
 		}
 	},
+	save: function (itemToSave, text) {
+		//this.props.model.save(todoToSave, text);
+		var thing = $.put('/profile/modify_item/', itemToSave)
+		console.log(thing)
+		this.setState({editing: null});
+	},
 	edit: function (item) {
 		this.setState({editing: item.id});
 	},
@@ -19,13 +25,14 @@ var Inventory = React.createClass({
 				<h3>Inventory:</h3>
 			{inventory.map(function(item){
 				var address = "/profile/"+item.name
-				console.log(this.state.editing)
+				console.log(item.id)
 				return(
 					<div key={item.id}>
 						<Item 
 							name={item.name} 
 							amount={item.amount}
 							onEdit={this.edit.bind(this, item)}
+							onSave={this.save.bind(this, item)}
 							editing={this.state.editing === item.id}
 						/>
 						<Router.Link to={address}>

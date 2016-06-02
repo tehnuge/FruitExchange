@@ -3,15 +3,44 @@
 <html>
 <head>
 	<title>Test app</title>
-
+	<script src="{% static "lib/jquery.min.js" %}"></script>
 	<script src="{% static "bundle.js" %}"></script>
 </head>
 <body>
 <div id="root">this is original</div>
-
 <script>
 	inventory = {{inventory| safe}}
     window.cookie = '{{ csrf_token }}';
+
+    function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+//functions for put requests
+    $.put = function(url, data, callback, contentType, dataType) {
+      return $.ajax({
+        url: url,
+        type: 'POST',
+        success: callback,
+        data: data,
+        contentType: contentType,
+        dataType: dataType
+      })
+      .done(function(){
+        alert("data saved")
+      });
+    };
+
+    $.ajaxSetup({
+      async: true,
+      contentType : 'application/json',
+      processData : false,
+      beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", cookie);
+          }
+      }
+    });
 </script>
 </body>
 </html>
