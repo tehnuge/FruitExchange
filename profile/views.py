@@ -1,12 +1,11 @@
 import json
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Produce
 from django.template import RequestContext
 
 from django.shortcuts import render, get_object_or_404, render_to_response, redirect
 
 def index(request):
-	inventory = []
 	#if submit, save new item
 	if request.method =="POST":
 		item = request.POST['item']
@@ -16,6 +15,7 @@ def index(request):
 		newItem.save()
 
 	#show user's inventory: iterate over Produce and append to inventory array
+	inventory = []
 	for prod in Produce.objects.filter(creator=request.user.id):
 		single = {}
 		single["id"] = prod.id
@@ -35,7 +35,18 @@ def modify_item(request):
 		i = Produce.objects.select_for_update().get(id=itemid)	
 		if newText is not i.produce_text:
 			i.produce_text = newText
-			print newText
 		i.save()
 
-	return HttpResponse(json.dumps(itemid), content_type='application/json')
+	#show user's inventory: iterate over Produce and append to inventory array
+	inventory = []
+	for prod in Produce.objects.filter(creator=request.user.id):
+		single = {}
+		single["id"] = prod.id
+		single["name"] = prod.produce_text
+		single["amount"] = prod.quantity
+		inventory.append(single)
+	context = {
+		'inventory': json.dumps(inventory)
+	}
+	#TODO: not reassigning inventory like I would want right now....
+	return HttpResponseRedirect('/')

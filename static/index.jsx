@@ -1,12 +1,9 @@
 import React from 'react'
 var ReactDOM = require('react-dom')
-/*import App from './app'
-*/import { Router, Route, browserHistory, IndexRoute } from 'react-router'
+import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 import routes from './routes'
-//import todo stuff
-/*var todoApp = require('./todo/app')
-var todoFooter = require('./todo/footer')
-var todoItem = require('./todo/todoItem')*/
+var _ = require('lodash')
+
 
 
 

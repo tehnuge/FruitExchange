@@ -13,12 +13,18 @@ var Inventory = React.createClass({
 	save: function (itemToSave, text) {
 		var postUrl = '/profile/modify_item/'
 		itemToSave["newText"] = text
-		$.post(postUrl, itemToSave)
-		console.log("id is: ", itemToSave.id, "text: ", text)
-		this.setState({editing: null});
+/*		var itemToChange = inventory.filter(function(obj){
+			return obj.id ==itemToSave.id
+		})[0]*/
+		$.post(postUrl, itemToSave, function(){
+			_.find(inventory, {'id': itemToSave.id}).name = text
+			console.log("sucess!")
+		})
+		//console.log("id is: ", itemToSave.id, "text: ", text)
+		this.setState({editing: null})
 	},
 	edit: function (item) {
-		this.setState({editing: item.id});
+		this.setState({editing: item.id})
 	},
 	render: function(){		
 		return(
@@ -26,7 +32,6 @@ var Inventory = React.createClass({
 				<h3>Inventory:</h3>
 			{inventory.map(function(item){
 				var address = "/profile/"+item.name
-				console.log(item.id)
 				return(
 					<div key={item.id}>
 						<Item 
