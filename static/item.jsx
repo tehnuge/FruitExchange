@@ -37,7 +37,7 @@ var Item = React.createClass({
 			<li>
 				<p> 
 					<label onDoubleClick={this.handleEdit}> 
-					item: {this.props.name}
+					item: {this.state.editText}
 					</label> amount: {this.props.amount}
 				</p>
 				<input
