@@ -1,5 +1,11 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
+//library for setting class names for DOM elements by referring it to a boolean value
+import classNames from 'classnames'
+
+
+var ESCAPE_KEY = 27
+var ENTER_KEY = 13
 
 var Item = React.createClass({
 	getInitialState: function () {
@@ -12,6 +18,14 @@ var Item = React.createClass({
 	handleChange: function (event) {
 		if (this.props.editing) {
 			this.setState({editText: event.target.value});
+		}
+	},
+	handleKeyDown: function (event) {
+		if (event.which === ESCAPE_KEY) {
+			this.setState({editText: this.props.todo.title});
+			this.props.onCancel(event);
+		} else if (event.which === ENTER_KEY) {
+			this.handleSubmit(event);
 		}
 	},
 	handleSubmit: function(event){
@@ -34,18 +48,21 @@ var Item = React.createClass({
 	},
 	render: function(){
 		return(
-			<li>
-				<p> 
+			<li className={classNames({
+				editing: this.props.editing
+			})}>
+				<div className="view"> 
 					<label onDoubleClick={this.handleEdit}> 
 					item: {this.state.editText}
 					</label> amount: {this.props.amount}
-				</p>
+				</div>
 				<input
 					ref="editField"
 					className="edit"
 					value={this.state.editText}
 					onChange={this.handleChange}
 					onBlur={this.handleSubmit}
+					onKeyDown={this.handleKeyDown}
 
 				/>
 			</li>

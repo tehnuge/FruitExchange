@@ -56,11 +56,16 @@
 	
 	var _routes2 = _interopRequireDefault(_routes);
 	
+	var _classnames = __webpack_require__(238);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ReactDOM = __webpack_require__(101);
 	
 	var _ = __webpack_require__(236);
+	
 	
 	document.addEventListener("DOMContentLoaded", function () {
 		ReactDOM.render(_react2.default.createElement(_reactRouter.Router, { routes: _routes2.default, history: _reactRouter.browserHistory }), document.getElementById('root'));
@@ -26004,8 +26009,19 @@
 
 	'use strict';
 	
+	var _classnames = __webpack_require__(238);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(101);
+	//library for setting class names for DOM elements by referring it to a boolean value
+	
+	
+	var ESCAPE_KEY = 27;
+	var ENTER_KEY = 13;
 	
 	var Item = React.createClass({
 		displayName: 'Item',
@@ -26020,6 +26036,14 @@
 		handleChange: function handleChange(event) {
 			if (this.props.editing) {
 				this.setState({ editText: event.target.value });
+			}
+		},
+		handleKeyDown: function handleKeyDown(event) {
+			if (event.which === ESCAPE_KEY) {
+				this.setState({ editText: this.props.todo.title });
+				this.props.onCancel(event);
+			} else if (event.which === ENTER_KEY) {
+				this.handleSubmit(event);
 			}
 		},
 		handleSubmit: function handleSubmit(event) {
@@ -26042,15 +26066,17 @@
 		render: function render() {
 			return React.createElement(
 				'li',
-				null,
+				{ className: (0, _classnames2.default)({
+						editing: this.props.editing
+					}) },
 				React.createElement(
-					'p',
-					null,
+					'div',
+					{ className: 'view' },
 					React.createElement(
 						'label',
 						{ onDoubleClick: this.handleEdit },
 						'item: ',
-						this.props.name
+						this.state.editText
 					),
 					' amount: ',
 					this.props.amount
@@ -26060,7 +26086,8 @@
 					className: 'edit',
 					value: this.state.editText,
 					onChange: this.handleChange,
-					onBlur: this.handleSubmit
+					onBlur: this.handleSubmit,
+					onKeyDown: this.handleKeyDown
 	
 				})
 			);
@@ -42618,6 +42645,60 @@
 		}
 		return module;
 	}
+
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+	
+	(function () {
+		'use strict';
+	
+		var hasOwn = {}.hasOwnProperty;
+	
+		function classNames () {
+			var classes = [];
+	
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+	
+				var argType = typeof arg;
+	
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+	
+			return classes.join(' ');
+		}
+	
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
 
 
 /***/ }
