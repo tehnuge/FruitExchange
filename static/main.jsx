@@ -1,4 +1,4 @@
-var React = require('react')
+ var React = require('react')
 var ReactDOM = require('react-dom')
 var Inventory = require('./inventory')
 
@@ -10,7 +10,7 @@ var Main = React.createClass({
 		//return inventory of items
 		return(
 			<div>
-				<h1>All Produce</h1>
+				<h1>The Market</h1>
 				<Inventory />
 			</div>
 			)

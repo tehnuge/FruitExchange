@@ -9741,6 +9741,10 @@
 	
 	var _reactRouter = __webpack_require__(38);
 	
+	var _navbar = __webpack_require__(239);
+	
+	var _navbar2 = _interopRequireDefault(_navbar);
+	
 	var _profile = __webpack_require__(100);
 	
 	var _profile2 = _interopRequireDefault(_profile);
@@ -9762,13 +9766,17 @@
 	module.exports = _react2.default.createElement(
 			'div',
 			null,
-			_react2.default.createElement(_reactRouter.Route, { path: '/', component: _main2.default }),
 			_react2.default.createElement(
 					_reactRouter.Route,
-					{ path: '/profile', component: _profile2.default },
-					_react2.default.createElement(_reactRouter.Route, { path: '/profile/:itemName', component: _item2.default })
-			),
-			_react2.default.createElement(_reactRouter.Route, { path: '/login', component: _login2.default })
+					{ path: '/', component: _navbar2.default },
+					_react2.default.createElement(_reactRouter.IndexRoute, { component: _main2.default }),
+					_react2.default.createElement(
+							_reactRouter.Route,
+							{ path: '/profile', component: _profile2.default },
+							_react2.default.createElement(_reactRouter.Route, { path: '/profile/:itemName', component: _item2.default })
+					),
+					_react2.default.createElement(_reactRouter.Route, { path: '/login', component: _login2.default })
+			)
 	);
 
 /***/ },
@@ -9796,7 +9804,7 @@
 				React.createElement(
 					'h1',
 					null,
-					'Your Profile!!'
+					'Your Profile'
 				),
 				React.createElement(Inventory, null),
 				React.createElement(Submission, null),
@@ -26031,7 +26039,8 @@
 		},
 		handleEdit: function handleEdit() {
 			this.props.onEdit();
-			this.setState({ editText: this.props.name });
+			//setting this setState will cause the text to revert to the previous state before refresh... need to think on this
+			//this.setState({editText: this.props.name});
 		},
 		handleChange: function handleChange(event) {
 			if (this.props.editing) {
@@ -26078,8 +26087,13 @@
 						'item: ',
 						this.state.editText
 					),
-					' amount: ',
-					this.props.amount
+					React.createElement(
+						'label',
+						null,
+						'amount: ',
+						this.props.amount
+					),
+					React.createElement('button', { className: 'destroy' })
 				),
 				React.createElement('input', {
 					ref: 'editField',
@@ -26160,7 +26174,7 @@
 				React.createElement(
 					'h1',
 					null,
-					'All Produce'
+					'The Market'
 				),
 				React.createElement(Inventory, null)
 			);
@@ -42700,6 +42714,86 @@
 		}
 	}());
 
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var Navlink = __webpack_require__(240);
+	
+	var Navbar = React.createClass({
+		displayName: 'Navbar',
+	
+		render: function render() {
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'h1',
+					null,
+					'The Fruit Exchange '
+				),
+				React.createElement(
+					'ul',
+					{ role: 'nav' },
+					React.createElement(
+						'li',
+						null,
+						React.createElement(
+							Navlink,
+							{ to: '/', onlyActiveOnIndex: true },
+							'Home '
+						)
+					),
+					React.createElement(
+						'li',
+						null,
+						React.createElement(
+							Navlink,
+							{ to: '/profile' },
+							'Profile'
+						)
+					),
+					React.createElement(
+						'li',
+						null,
+						React.createElement(
+							Navlink,
+							{ to: '/login' },
+							'Login'
+						)
+					)
+				),
+				this.props.children
+			);
+		}
+	});
+	
+	module.exports = Navbar;
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var React = __webpack_require__(1);
+	var Router = __webpack_require__(38);
+	
+	var Navlink = React.createClass({
+		displayName: 'Navlink',
+	
+		render: function render() {
+			return React.createElement(Router.Link, _extends({}, this.props, { activeClassName: 'active' }));
+		}
+	});
+	
+	module.exports = Navlink;
 
 /***/ }
 /******/ ]);

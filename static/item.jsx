@@ -13,7 +13,8 @@ var Item = React.createClass({
 	},
 	handleEdit: function () {
 		this.props.onEdit();
-		this.setState({editText: this.props.name});
+		//setting this setState will cause the text to revert to the previous state before refresh... need to think on this
+		//this.setState({editText: this.props.name});
 	},
 	handleChange: function (event) {
 		if (this.props.editing) {
@@ -53,8 +54,9 @@ var Item = React.createClass({
 			})}>
 				<div className="view"> 
 					<label onDoubleClick={this.handleEdit}> 
-					item: {this.state.editText}
-					</label> amount: {this.props.amount}
+					item: {this.state.editText}</label> 
+					<label>amount: {this.props.amount}</label>
+					<button className="destroy" />
 				</div>
 				<input
 					ref="editField"
