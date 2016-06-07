@@ -12,33 +12,17 @@
 <body>
 <div id="root">this is original</div>
 <script>
+  //Where the Django -> Javascript transfer happens! Send data to these variables
 	inventory = {{inventory| safe}}
+  marketItems = {{marketItems| safe}}
     window.cookie = '{{ csrf_token }}';
 
     function csrfSafeMethod(method) {
       // these HTTP methods do not require CSRF protection
       return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
-//functions for put requests
-    $.put = function(url, data, callback, contentType, dataType) {
-      return $.ajax({
-        url: url,
-        type: 'POST',
-        success: callback,
-        data: data,
-        contentType: contentType,
-        dataType: dataType
-      })
-      .done(function(){
-        alert("data saved")
-      });
-    };
 
     $.ajaxSetup({
-      //these settings dont work for the ajax call to edit items
-      //async: true,
-      //contentType : 'application/json',
-      //processData : false,
       beforeSend: function(xhr, settings) {
           if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
               xhr.setRequestHeader("X-CSRFToken", cookie);

@@ -1,18 +1,22 @@
 var React = require('react')
 var ReactDOM = require('react-dom')
-var Inventory = require('./inventory')
+var UserInventory = require('./userInventory')
 var Submission = require('./submission')
 
 var Profile = React.createClass({
 
 	render: function(){
+		$.get('/profile/update_items/', function(data){
+			inventory = data
+			console.log('success!!', data)
+		})
 		console.log(inventory)
 		
 		//return inventory of items
 		return(
 			<div>
 				<h1>Your Profile</h1>
-				<Inventory />
+				<UserInventory />
 				<Submission />
 				{this.props.children}
 			</div>

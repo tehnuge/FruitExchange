@@ -9787,7 +9787,7 @@
 	
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(101);
-	var Inventory = __webpack_require__(231);
+	var UserInventory = __webpack_require__(242);
 	var Submission = __webpack_require__(233);
 	
 	var Profile = React.createClass({
@@ -9795,6 +9795,10 @@
 	
 	
 		render: function render() {
+			$.get('/profile/update_items/', function (data) {
+				inventory = data;
+				console.log('success!!', data);
+			});
 			console.log(inventory);
 	
 			//return inventory of items
@@ -9806,7 +9810,7 @@
 					null,
 					'Your Profile'
 				),
-				React.createElement(Inventory, null),
+				React.createElement(UserInventory, null),
 				React.createElement(Submission, null),
 				this.props.children
 			);
@@ -25942,76 +25946,7 @@
 	module.exports = ReactMount.renderSubtreeIntoContainer;
 
 /***/ },
-/* 231 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	var Router = __webpack_require__(38);
-	var Item = __webpack_require__(232);
-	
-	var Inventory = React.createClass({
-		displayName: 'Inventory',
-	
-		getInitialState: function getInitialState() {
-			return {
-				nowShowing: inventory,
-				editing: null,
-				newItem: ''
-			};
-		},
-		save: function save(itemToSave, text) {
-			var postUrl = '/profile/modify_item/';
-			itemToSave["newText"] = text;
-			/*		var itemToChange = inventory.filter(function(obj){
-	  			return obj.id ==itemToSave.id
-	  		})[0]*/
-			$.post(postUrl, itemToSave, function () {
-				_.find(inventory, { 'id': itemToSave.id }).name = text;
-				console.log("sucess!");
-			});
-			//console.log("id is: ", itemToSave.id, "text: ", text)
-			this.setState({ editing: null });
-		},
-		edit: function edit(item) {
-			this.setState({ editing: item.id });
-		},
-		render: function render() {
-			return React.createElement(
-				'div',
-				null,
-				React.createElement(
-					'h3',
-					null,
-					'Inventory:'
-				),
-				inventory.map(function (item) {
-					var address = "/profile/" + item.name;
-					return React.createElement(
-						'div',
-						{ key: item.id },
-						React.createElement(Item, {
-							name: item.name,
-							amount: item.amount,
-							onEdit: this.edit.bind(this, item),
-							onSave: this.save.bind(this, item),
-							editing: this.state.editing === item.id
-						}),
-						React.createElement(
-							Router.Link,
-							{ to: address },
-							'Advanced editing'
-						)
-					);
-				}, this)
-			);
-		}
-	});
-	
-	module.exports = Inventory;
-
-/***/ },
+/* 231 */,
 /* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -26158,14 +26093,15 @@
 	
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(101);
-	var Inventory = __webpack_require__(231);
+	var FullInventory = __webpack_require__(241);
 	
 	var Main = React.createClass({
 		displayName: 'Main',
 	
 	
 		render: function render() {
-			console.log(inventory);
+			$.get('/');
+			console.log(marketItems);
 	
 			//return inventory of items
 			return React.createElement(
@@ -26176,7 +26112,7 @@
 					null,
 					'The Market'
 				),
-				React.createElement(Inventory, null)
+				React.createElement(FullInventory, null)
 			);
 		}
 	});
@@ -42794,6 +42730,143 @@
 	});
 	
 	module.exports = Navlink;
+
+/***/ },
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var Router = __webpack_require__(38);
+	var Item = __webpack_require__(232);
+	
+	var FullInventory = React.createClass({
+		displayName: 'FullInventory',
+	
+		getInitialState: function getInitialState() {
+			return {
+				nowShowing: marketItems,
+				editing: null,
+				newItem: ''
+			};
+		},
+		save: function save(itemToSave, text) {
+			//append new text to the itemToSave object and save it
+			var postUrl = '/profile/modify_item/';
+			itemToSave["newText"] = text;
+			$.post(postUrl, itemToSave, function () {
+				//dont need this lodash crap
+				//_.find(inventory, {'id': itemToSave.id}).name = text
+				console.log("sucess!");
+			});
+			this.setState({ editing: null });
+		},
+		edit: function edit(item) {
+			this.setState({ editing: item.id });
+		},
+		render: function render() {
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'h3',
+					null,
+					'Inventory:'
+				),
+				marketItems.map(function (item) {
+					var address = "/profile/" + item.name;
+					return React.createElement(
+						'div',
+						{ key: item.id },
+						React.createElement(Item, {
+							name: item.name,
+							amount: item.amount,
+							onEdit: this.edit.bind(this, item),
+							onSave: this.save.bind(this, item),
+							editing: this.state.editing === item.id
+						}),
+						React.createElement(
+							Router.Link,
+							{ to: address },
+							'Advanced editing'
+						)
+					);
+				}, this)
+			);
+		}
+	});
+	
+	module.exports = FullInventory;
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var Router = __webpack_require__(38);
+	var Item = __webpack_require__(232);
+	
+	var UserInventory = React.createClass({
+		displayName: 'UserInventory',
+	
+		getInitialState: function getInitialState() {
+			return {
+				nowShowing: inventory,
+				editing: null,
+				newItem: ''
+			};
+		},
+		save: function save(itemToSave, text) {
+			//append new text to the itemToSave object and save it
+			var postUrl = '/profile/modify_item/';
+			itemToSave["newText"] = text;
+			$.post(postUrl, itemToSave, function () {
+				//dont need this lodash crap
+				//_.find(inventory, {'id': itemToSave.id}).name = text
+				console.log("sucess!");
+			});
+			this.setState({ editing: null });
+		},
+		edit: function edit(item) {
+			this.setState({ editing: item.id });
+		},
+		render: function render() {
+	
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'h3',
+					null,
+					'Inventory:'
+				),
+				inventory.map(function (item) {
+					var address = "/profile/" + item.name;
+					return React.createElement(
+						'div',
+						{ key: item.id },
+						React.createElement(Item, {
+							name: item.name,
+							amount: item.amount,
+							onEdit: this.edit.bind(this, item),
+							onSave: this.save.bind(this, item),
+							editing: this.state.editing === item.id
+						}),
+						React.createElement(
+							Router.Link,
+							{ to: address },
+							'Advanced editing'
+						)
+					);
+				}, this)
+			);
+		}
+	});
+	
+	module.exports = UserInventory;
 
 /***/ }
 /******/ ]);

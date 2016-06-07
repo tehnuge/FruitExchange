@@ -2,8 +2,31 @@ import json
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Produce
 from django.template import RequestContext
-
 from django.shortcuts import render, get_object_or_404, render_to_response, redirect
+
+def get_creator_items(request):
+	#show user's inventory: iterate over Produce and append to inventory array
+	inventory = []
+	for prod in Produce.objects.filter(creator=request.user.id):
+		single = {}
+		single["id"] = prod.id
+		single["name"] = prod.produce_text
+		single["amount"] = prod.quantity
+		inventory.append(single)
+
+	marketItems = []
+	#iterate over Produce and append to inventory array
+	for prod in Produce.objects.all():
+		single = {}
+		single["id"] = prod.id
+		single["name"] = prod.produce_text
+		single["amount"] = prod.quantity
+		marketItems.append(single)
+	context = {
+		'inventory': json.dumps(inventory),
+		'marketItems': json.dumps(marketItems)
+	}
+	return context
 
 def index(request):
 	#if submit, save new item
@@ -14,19 +37,17 @@ def index(request):
 		newItem = Produce(creator = creator, produce_text = item, quantity = qty)
 		newItem.save()
 
-	#show user's inventory: iterate over Produce and append to inventory array
-	inventory = []
-	for prod in Produce.objects.filter(creator=request.user.id):
-		single = {}
-		single["id"] = prod.id
-		single["name"] = prod.produce_text
-		single["amount"] = prod.quantity
-		inventory.append(single)
-	context = {
-		'inventory': json.dumps(inventory)
-	}
+	context = get_creator_items(request)
+
 	return render_to_response('index.html', RequestContext(request, context))
 
+#API for updating the 'inventory' global variable
+def update_items(request):
+	context = get_creator_items(request)
+	print "is ajax!!!"
+	return HttpResponse(context['inventory'], content_type="application/json")
+
+#editing items
 def modify_item(request):
 	if request.is_ajax():
 		itemid = request.POST.get('id')
@@ -36,17 +57,5 @@ def modify_item(request):
 		if newText is not i.produce_text:
 			i.produce_text = newText
 		i.save()
-
-	#show user's inventory: iterate over Produce and append to inventory array
-	inventory = []
-	for prod in Produce.objects.filter(creator=request.user.id):
-		single = {}
-		single["id"] = prod.id
-		single["name"] = prod.produce_text
-		single["amount"] = prod.quantity
-		inventory.append(single)
-	context = {
-		'inventory': json.dumps(inventory)
-	}
 	#TODO: not reassigning inventory like I would want right now....
 	return HttpResponseRedirect('/')

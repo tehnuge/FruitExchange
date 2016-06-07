@@ -2,7 +2,7 @@ var React = require('react')
 var Router = require('react-router')
 var Item = require('./item')
 
-var Inventory = React.createClass({
+var UserInventory = React.createClass({
 	getInitialState: function(){
 		return{
 			nowShowing: inventory,
@@ -11,22 +11,21 @@ var Inventory = React.createClass({
 		}
 	},
 	save: function (itemToSave, text) {
+		//append new text to the itemToSave object and save it
 		var postUrl = '/profile/modify_item/'
 		itemToSave["newText"] = text
-/*		var itemToChange = inventory.filter(function(obj){
-			return obj.id ==itemToSave.id
-		})[0]*/
 		$.post(postUrl, itemToSave, function(){
-			_.find(inventory, {'id': itemToSave.id}).name = text
+			//dont need this lodash crap
+			//_.find(inventory, {'id': itemToSave.id}).name = text
 			console.log("sucess!")
 		})
-		//console.log("id is: ", itemToSave.id, "text: ", text)
 		this.setState({editing: null})
 	},
 	edit: function (item) {
 		this.setState({editing: item.id})
 	},
-	render: function(){		
+	render: function(){	
+
 		return(
 			<div>
 				<h3>Inventory:</h3>
@@ -53,4 +52,4 @@ var Inventory = React.createClass({
 	}
 })
 
-module.exports = Inventory
+module.exports = UserInventory
