@@ -9,6 +9,7 @@ from django.utils.http import is_safe_url
 
 from django.shortcuts import render, get_object_or_404, render_to_response,resolve_url
 
+#helper function to send item data
 def get_creator_items(request):
     #show user's inventory: iterate over Produce and append to inventory array
     inventory = []
