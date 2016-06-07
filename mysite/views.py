@@ -9,7 +9,7 @@ from django.utils.http import is_safe_url
 
 from django.shortcuts import render, get_object_or_404, render_to_response,resolve_url
 
-def main(request):
+def get_creator_items(request):
     #show user's inventory: iterate over Produce and append to inventory array
     inventory = []
     for prod in Produce.objects.filter(creator=request.user.id):
@@ -18,8 +18,9 @@ def main(request):
         single["name"] = prod.produce_text
         single["amount"] = prod.quantity
         inventory.append(single)
+
     marketItems = []
-	#iterate over Produce and append to inventory array
+    #iterate over Produce and append to inventory array
     for prod in Produce.objects.all():
         single = {}
         single["id"] = prod.id
@@ -30,6 +31,10 @@ def main(request):
         'inventory': json.dumps(inventory),
         'marketItems': json.dumps(marketItems)
     }
+    return context
+
+def main(request):
+    context = get_creator_items(request)
     return render_to_response('index.html', RequestContext(request, context))
 
 def login(request, template_name='index.html',
@@ -91,13 +96,6 @@ def login(request, template_name='index.html',
 
     # current_site = get_current_site(request)
 
-    context = {
-        # 'form': Bunch(**form),
-        redirect_field_name: redirect_to,
-        # 'site': current_site,
-        # 'site_name': current_site.name,
-    }
-    # if extra_context is not None:
-    #     context.update(extra_context)
+    context = get_creator_items(request)
 
     return render_to_response(template_name, RequestContext(request, context))
