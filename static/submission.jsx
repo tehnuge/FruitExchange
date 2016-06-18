@@ -14,6 +14,7 @@ var Submission = React.createClass({
 						<input id="item" name="item" type="text" />
 					<label>Qty: </label>
 						<input id="qty" name="qty"/>
+						<input type="hidden" name="action" value="new" />
 					<input type="submit" class="button"/>
 				</form>
 			</div>

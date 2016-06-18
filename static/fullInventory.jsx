@@ -1,6 +1,7 @@
 var React = require('react')
 var Router = require('react-router')
 var Item = require('./item')
+var postUrl = '/profile/modify_item/'
 
 var FullInventory = React.createClass({
 	getInitialState: function(){
@@ -12,12 +13,12 @@ var FullInventory = React.createClass({
 	},
 	save: function (itemToSave, text) {
 		//append new text to the itemToSave object and save it
-		var postUrl = '/profile/modify_item/'
-		itemToSave["newText"] = text
+		itemToSave["newText"] = text;
+		itemToSave['action'] = 'save';
 		$.post(postUrl, itemToSave, function(){
 			//dont need this lodash crap
 			//_.find(inventory, {'id': itemToSave.id}).name = text
-			console.log("sucess!")
+			console.log("save sucess!")
 		})
 		this.setState({editing: null})
 	},
@@ -39,7 +40,9 @@ var FullInventory = React.createClass({
 							onSave={this.save.bind(this, item)}
 							editing={this.state.editing === item.id}
 						/>
-						<Router.Link to={address}>
+						<Router.Link 
+						name={item.name}
+						to={address}>
 							Advanced editing
 						</Router.Link>
 						

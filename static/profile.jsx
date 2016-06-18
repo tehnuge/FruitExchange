@@ -6,10 +6,10 @@ var Submission = require('./submission')
 var Profile = React.createClass({
 
 	render: function(){
-		$.get('/profile/update_items/', function(data){
+/*		$.get('/profile/update_items/', function(data){
 			inventory = data
-			console.log('success!!', data)
-		})
+			console.log('Profile.jsx success!!', data)
+		})*/
 		console.log(inventory)
 		
 		//return inventory of items

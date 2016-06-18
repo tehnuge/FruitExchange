@@ -30,7 +30,7 @@ def get_creator_items(request):
 
 def index(request):
 	#if submit, save new item
-	if request.method =="POST":
+	if request.method =="POST" and request.POST.get('action') == 'new':
 		item = request.POST['item']
 		qty = request.POST['qty']
 		creator = request.user
@@ -49,7 +49,7 @@ def update_items(request):
 
 #editing items
 def modify_item(request):
-	if request.is_ajax():
+	if request.is_ajax() and request.POST.get('action') == 'save':
 		itemid = request.POST.get('id')
 		newText = request.POST.get('newText')
 		quantity = request.POST.get('quantity')
@@ -57,5 +57,9 @@ def modify_item(request):
 		if newText is not i.produce_text:
 			i.produce_text = newText
 		i.save()
+	if request.is_ajax() and request.POST.get('action') == 'destroy':
+		itemid = request.POST.get('id')
+		Produce.objects.filter(id=itemid).delete()
 	#TODO: not reassigning inventory like I would want right now....
-	return HttpResponseRedirect('/')
+	context = get_creator_items(request)
+	return render_to_response('index.html', RequestContext(request, context))

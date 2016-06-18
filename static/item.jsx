@@ -36,7 +36,6 @@ var Item = React.createClass({
 			this.setState({editText: val})
 		}
 		else{
-			//do nothing for now.....
 			//this.props.onDestroy()
 		}
 	},
@@ -56,7 +55,10 @@ var Item = React.createClass({
 					<label onDoubleClick={this.handleEdit}> 
 					item: {this.state.editText}</label> 
 					<label>amount: {this.props.amount}</label>
-					<button className="destroy" />
+					<form method="post" action="/profile/">
+						<input type="hidden" name="csrfmiddlewaretoken" value={cookie} />
+							<button className="destroy" onClick={this.props.onDestroy} />
+					</form>
 				</div>
 				<input
 					ref="editField"
