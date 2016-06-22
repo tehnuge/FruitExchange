@@ -63,3 +63,8 @@ def modify_item(request):
 	#TODO: not reassigning inventory like I would want right now....
 	context = get_creator_items(request)
 	return render_to_response('index.html', RequestContext(request, context))
+
+def signup(request):
+	success = request.POST.get('success')
+	print success
+	return render_to_response('index.html', RequestContext(request, context))

@@ -64,7 +64,7 @@
 	
 	var ReactDOM = __webpack_require__(103);
 	
-	var _ = __webpack_require__(240);
+	var _ = __webpack_require__(241);
 	
 	
 	document.addEventListener("DOMContentLoaded", function () {
@@ -9761,6 +9761,10 @@
 	
 	var _item2 = _interopRequireDefault(_item);
 	
+	var _signup = __webpack_require__(240);
+	
+	var _signup2 = _interopRequireDefault(_signup);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	module.exports = _react2.default.createElement(
@@ -9775,7 +9779,8 @@
 							{ path: '/profile', component: _profile2.default },
 							_react2.default.createElement(_reactRouter.Route, { path: '/profile/:itemName', component: _item2.default })
 					),
-					_react2.default.createElement(_reactRouter.Route, { path: '/login', component: _login2.default })
+					_react2.default.createElement(_reactRouter.Route, { path: '/login', component: _login2.default }),
+					_react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _signup2.default })
 			)
 	);
 
@@ -26412,46 +26417,54 @@
 /* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
+	
+	var _reactRouter = __webpack_require__(38);
 	
 	var React = __webpack_require__(1);
 	
+	
 	var Login = React.createClass({
-		displayName: "Login",
+		displayName: 'Login',
 	
 		render: function render() {
 			return React.createElement(
-				"div",
+				'div',
 				null,
 				React.createElement(
-					"form",
-					{ method: "post", action: "/login" },
-					React.createElement("input", { type: "hidden", name: "csrfmiddlewaretoken", value: cookie }),
+					'form',
+					{ method: 'post', action: '/login' },
+					React.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie }),
 					React.createElement(
-						"label",
-						{ "for": "username" },
+						'label',
+						{ 'for': 'username' },
 						React.createElement(
-							"h3",
+							'h3',
 							null,
-							"Account Name"
+							'Account Name'
 						)
 					),
-					React.createElement("input", { id: "username", name: "username", type: "text",
-						placeholder: "Your account name",
-						autocomplete: "off" }),
+					React.createElement('input', { id: 'username', name: 'username', type: 'text',
+						placeholder: 'Your account name',
+						autocomplete: 'off' }),
 					React.createElement(
-						"label",
-						{ "for": "password" },
+						'label',
+						{ 'for': 'password' },
 						React.createElement(
-							"h3",
+							'h3',
 							null,
-							"Password"
+							'Password'
 						)
 					),
-					React.createElement("input", { id: "password", name: "password", type: "password",
-						placeholder: "Your password",
-						autocomplete: "off" }),
-					React.createElement("input", { type: "submit", "class": "button" })
+					React.createElement('input', { id: 'password', name: 'password', type: 'password',
+						placeholder: 'Your password',
+						autocomplete: 'off' }),
+					React.createElement('input', { type: 'submit', 'class': 'button' }),
+					React.createElement(
+						_reactRouter.Link,
+						{ to: '/signup/' },
+						'No Account? Sign Up'
+					)
 				)
 			);
 		}
@@ -26461,6 +26474,95 @@
 
 /***/ },
 /* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var SignUp = _react2.default.createClass({
+		displayName: 'SignUp',
+	
+		handleSubmit: function handleSubmit() {
+			var password = document.getElementById('password').value;
+			var password2 = document.getElementById('password2').value;
+			if (password !== password2) {
+				console.log(password2);
+				alert("Passwords didn't match man");
+			} else {
+				var username = document.getElementById('username').value;
+				var data = {
+					'username': username,
+					'password': password
+				};
+				$.post('/signup/', data, function () {
+					console.log('signup success');
+				});
+			}
+		},
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'h2',
+					null,
+					'Sign Up '
+				),
+				_react2.default.createElement(
+					'form',
+					{ method: 'post', action: '/signup/' },
+					_react2.default.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie }),
+					_react2.default.createElement(
+						'label',
+						{ 'for': 'username' },
+						_react2.default.createElement(
+							'h3',
+							null,
+							'Account Name'
+						)
+					),
+					_react2.default.createElement('input', { id: 'username', name: 'username', type: 'text',
+						placeholder: 'Your account name',
+						autocomplete: 'off' }),
+					_react2.default.createElement(
+						'label',
+						{ 'for': 'password' },
+						_react2.default.createElement(
+							'h3',
+							null,
+							'Password'
+						)
+					),
+					_react2.default.createElement('input', { id: 'password', name: 'password', type: 'password',
+						placeholder: 'Your password',
+						autocomplete: 'off' }),
+					_react2.default.createElement(
+						'label',
+						{ 'for': 'password2' },
+						_react2.default.createElement(
+							'h3',
+							null,
+							'Password'
+						)
+					),
+					_react2.default.createElement('input', { id: 'password2', name: 'password2', type: 'password',
+						placeholder: 'Type your password again',
+						autocomplete: 'off' }),
+					_react2.default.createElement('input', { type: 'submit', 'class': 'button', onClick: this.handleSubmit })
+				)
+			);
+		}
+	});
+	
+	module.exports = SignUp;
+
+/***/ },
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -42868,10 +42970,10 @@
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(241)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(242)(module), (function() { return this; }())))
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {

@@ -6,6 +6,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login, authenticate, REDIRECT_FIELD_NAME
 from django.conf import settings
 from django.utils.http import is_safe_url
+from django.contrib.auth.models import User
+
 
 from django.shortcuts import render, get_object_or_404, render_to_response,resolve_url
 
@@ -36,6 +38,18 @@ def get_creator_items(request):
 
 def main(request):
     context = get_creator_items(request)
+    return render_to_response('index.html', RequestContext(request, context))
+
+def signup(request):
+    context = {}
+    if request.method == "POST":       
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        if User.objects.filter(username=username):
+            context['error'] = "This username is not Available."
+        else:
+            user = User.objects.create_user(username= username, password=password)
+            print "User created"
     return render_to_response('index.html', RequestContext(request, context))
 
 def login(request, template_name='index.html',

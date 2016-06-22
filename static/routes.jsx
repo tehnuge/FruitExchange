@@ -5,6 +5,7 @@ import Profile from './profile'
 import Main from './main'
 import Login from './login'
 import Item from './item'
+import SignUp from './signup'
 
 module.exports = (
 <div>
@@ -14,6 +15,7 @@ module.exports = (
 	  	<Route path="/profile/:itemName" component={Item}/>
 	  </Route>
 	<Route path="/login" component={Login} />
+	<Route path="/signup" component={SignUp} />
 	</Route>
 </div>
 )

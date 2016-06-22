@@ -1,4 +1,5 @@
 var React = require('react')
+import { Link } from 'react-router'
 
 var Login = React.createClass({
 	render: function(){
@@ -15,6 +16,7 @@ var Login = React.createClass({
 		              placeholder="Your password"
 		              autocomplete="off" />
 		              <input type="submit" class="button" />
+		        <Link to="/signup/">No Account? Sign Up</Link>
 		       </form>
 			</div>
 		)
