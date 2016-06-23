@@ -38,7 +38,7 @@ def get_creator_items(request):
 
 def main(request):
     context = get_creator_items(request)
-    return render_to_response('index.html', RequestContext(request, context))
+    return render(request, 'index.html', context)
 
 def signup(request):
     context = {}
@@ -50,7 +50,7 @@ def signup(request):
         else:
             user = User.objects.create_user(username= username, password=password)
             print "User created"
-    return render_to_response('index.html', RequestContext(request, context))
+    return render(request, 'index.html', RequestContext(request, context))
 
 def login(request, template_name='index.html',
           redirect_field_name='REDIRECT_FIELD_NAME',
@@ -113,4 +113,4 @@ def login(request, template_name='index.html',
 
     context = get_creator_items(request)
 
-    return render_to_response(template_name, RequestContext(request, context))
+    return render(request, template_name, context)

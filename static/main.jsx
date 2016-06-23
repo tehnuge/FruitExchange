@@ -5,8 +5,8 @@ var FullInventory = require('./fullInventory')
 var Main = React.createClass({
 
 	render: function(){
-		$.get('/')
-		console.log(marketItems)
+/*		$.get('/')
+*/		console.log(marketItems)
 		
 		//return inventory of items
 		return(

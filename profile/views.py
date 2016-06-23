@@ -39,9 +39,11 @@ def index(request):
 
 	context = get_creator_items(request)
 
-	return render_to_response('index.html', RequestContext(request, context))
+	return render(request, 'index.html', context)
 
-#API for updating the 'inventory' global variable
+#NOT BEING USED BY profile.jsx anymore, DELETE??? API for updating the 'inventory' global variable
+#I dont need to alter the 'inventory' variable since react is taking care of how it looks, but i
+#couldnt figure it out anyway
 def update_items(request):
 	context = get_creator_items(request)
 	print "is ajax!!!"
@@ -62,6 +64,6 @@ def modify_item(request):
 		Produce.objects.filter(id=itemid).delete()
 	#TODO: not reassigning inventory like I would want right now....
 	context = get_creator_items(request)
-	return render_to_response('index.html', RequestContext(request, context))
+	return render(request, 'index.html', context)
 
 
