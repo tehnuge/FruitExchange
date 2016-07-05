@@ -1,6 +1,6 @@
 import json
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from profile.models import Produce
+from profile.models import Produce, Location
 from django.template import RequestContext
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login, authenticate, REDIRECT_FIELD_NAME
@@ -29,6 +29,10 @@ def get_creator_items(request):
         single["id"] = prod.id
         single["name"] = prod.produce_text
         single["amount"] = prod.quantity
+        single["street"] = prod.creator.location.street
+        single["city"] = prod.creator.location.city
+        single["state"] = prod.creator.location.state
+        single["creator"] = prod.creator.get_username()
         marketItems.append(single)
     context = {
         'inventory': json.dumps(inventory),

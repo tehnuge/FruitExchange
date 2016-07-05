@@ -11,9 +11,9 @@ class Produce(models.Model):
 	quantity = models.IntegerField(default=0)
 	def __str__(self):
 		return self.produce_text
-
+		
 class Location(models.Model):
-	user = models.OneToOneField(User, on_delete=models.CASCADE)
+	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 	street = models.CharField(max_length=100)
 	city = models.CharField(max_length=100)
 	state = models.CharField(max_length = 100)

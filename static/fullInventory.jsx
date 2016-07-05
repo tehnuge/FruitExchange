@@ -36,16 +36,11 @@ var FullInventory = React.createClass({
 						<Item 
 							name={item.name} 
 							amount={item.amount}
+							creator = {item.creator}
 							onEdit={this.edit.bind(this, item)}
 							onSave={this.save.bind(this, item)}
 							editing={this.state.editing === item.id}
-						/>
-						<Router.Link 
-						name={item.name}
-						to={address}>
-							Advanced editing
-						</Router.Link>
-						
+						/>					
 					</div>
 					)
 			}, this)}
