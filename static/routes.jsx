@@ -4,7 +4,7 @@ import Navbar from './navbar'
 import Profile from './profile'
 import Main from './main'
 import Login from './login'
-import Item from './item'
+import UserItem from './userItem'
 import SignUp from './signup'
 
 module.exports = (
@@ -12,7 +12,7 @@ module.exports = (
   <Route path="/" component={Navbar}>
   	<IndexRoute component={Main} />
 	  <Route path="/profile" component={Profile}>
-	  	<Route path="/profile/:itemName" component={Item}/>
+	  	<Route path="/profile/:itemName" component={UserItem}/>
 	  </Route>
 	<Route path="/login" component={Login} />
 	<Route path="/signup" component={SignUp} />

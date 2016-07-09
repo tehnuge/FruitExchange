@@ -1,6 +1,6 @@
-var React = require('react')
-var Router = require('react-router')
-var Item = require('./item')
+import React from 'react'
+import Router from 'react-router'
+import FullItem from './fullItem'
 var postUrl = '/profile/modify_item/'
 
 var FullInventory = React.createClass({
@@ -33,7 +33,7 @@ var FullInventory = React.createClass({
 				var address = "/profile/"+item.name
 				return(
 					<div key={item.id}>
-						<Item 
+						<FullItem 
 							name={item.name} 
 							amount={item.amount}
 							creator = {item.creator}

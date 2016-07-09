@@ -1,6 +1,6 @@
-var React = require('react')
-var Router = require('react-router')
-var Item = require('./item')
+import React from 'react'
+import Router from 'react-router'
+import UserItem from './userItem'
 var postUrl = '/profile/modify_item/'
 
 var UserInventory = React.createClass({
@@ -43,7 +43,7 @@ var UserInventory = React.createClass({
 				var address = "/profile/"+item.name
 				return(
 					<div key={item.id}>
-						<Item 
+						<UserItem 
 							name={item.name} 
 							amount={item.amount}
 							onEdit={this.edit.bind(this, item)}
@@ -51,9 +51,6 @@ var UserInventory = React.createClass({
 							editing={this.state.editing === item.id}
 							onDestroy={this.destroy.bind(this, item)}
 						/>
-						<Router.Link to={address}>
-							Advanced editing
-						</Router.Link>
 						
 					</div>
 					)

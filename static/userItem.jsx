@@ -1,5 +1,5 @@
-var React = require('react')
-var ReactDOM = require('react-dom')
+import React from 'react'
+import ReactDOM from 'react-dom'
 //library for setting class names for DOM elements by referring it to a boolean value
 import classNames from 'classnames'
 
@@ -7,7 +7,7 @@ import classNames from 'classnames'
 var ESCAPE_KEY = 27
 var ENTER_KEY = 13
 
-var Item = React.createClass({
+var UserItem = React.createClass({
 	getInitialState: function () {
 		return {editText: this.props.name};
 	},
@@ -75,4 +75,4 @@ var Item = React.createClass({
 	}
 })
 
-module.exports = Item
+module.exports = UserItem
