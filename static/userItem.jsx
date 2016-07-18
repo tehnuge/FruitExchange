@@ -54,8 +54,7 @@ var UserItem = React.createClass({
 				<div className="view"> 
 					<label onDoubleClick={this.handleEdit}> 
 					item: {this.state.editText}</label> 
-					<label>amount: {this.props.amount}</label>
-					<label> user: {this.props.creator}</label>
+					<p>amount: {this.props.amount}</p>
 					<form method="post" action="/profile/">
 						<input type="hidden" name="csrfmiddlewaretoken" value={cookie} />
 							<button className="destroy" onClick={this.props.onDestroy} />

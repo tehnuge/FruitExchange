@@ -60,7 +60,7 @@
 	
 	var _routes2 = _interopRequireDefault(_routes);
 	
-	var _lodash = __webpack_require__(244);
+	var _lodash = __webpack_require__(245);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
@@ -26567,15 +26567,15 @@
 	
 	var _main2 = _interopRequireDefault(_main);
 	
-	var _login = __webpack_require__(242);
+	var _login = __webpack_require__(243);
 	
 	var _login2 = _interopRequireDefault(_login);
 	
-	var _userItem = __webpack_require__(246);
+	var _userItem = __webpack_require__(237);
 	
 	var _userItem2 = _interopRequireDefault(_userItem);
 	
-	var _signup = __webpack_require__(243);
+	var _signup = __webpack_require__(244);
 	
 	var _signup2 = _interopRequireDefault(_signup);
 	
@@ -26732,7 +26732,7 @@
 	
 	var _reactRouter2 = _interopRequireDefault(_reactRouter);
 	
-	var _userItem = __webpack_require__(246);
+	var _userItem = __webpack_require__(237);
 	
 	var _userItem2 = _interopRequireDefault(_userItem);
 	
@@ -26805,7 +26805,114 @@
 	module.exports = UserInventory;
 
 /***/ },
-/* 237 */,
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(33);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _classnames = __webpack_require__(238);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ESCAPE_KEY = 27;
+	//library for setting class names for DOM elements by referring it to a boolean value
+	
+	var ENTER_KEY = 13;
+	
+	var UserItem = _react2.default.createClass({
+		displayName: 'UserItem',
+	
+		getInitialState: function getInitialState() {
+			return { editText: this.props.name };
+		},
+		handleEdit: function handleEdit() {
+			this.props.onEdit();
+			//setting this setState will cause the text to revert to the previous state before refresh... need to think on this
+			//this.setState({editText: this.props.name});
+		},
+		handleChange: function handleChange(event) {
+			if (this.props.editing) {
+				this.setState({ editText: event.target.value });
+			}
+		},
+		handleKeyDown: function handleKeyDown(event) {
+			if (event.which === ESCAPE_KEY) {
+				this.setState({ editText: this.props.todo.title });
+				this.props.onCancel(event);
+			} else if (event.which === ENTER_KEY) {
+				this.handleSubmit(event);
+			}
+		},
+		handleSubmit: function handleSubmit(event) {
+			var val = this.state.editText.trim();
+			if (val) {
+				this.props.onSave(val);
+				this.setState({ editText: val });
+			} else {
+				//this.props.onDestroy()
+			}
+		},
+		componentDidUpdate: function componentDidUpdate(prevProps) {
+			if (!prevProps.editing && this.props.editing) {
+				var node = _reactDom2.default.findDOMNode(this.refs.editField);
+				node.focus();
+				node.setSelectionRange(node.value.length, node.value.length);
+			}
+		},
+		render: function render() {
+			return _react2.default.createElement(
+				'li',
+				{ className: (0, _classnames2.default)({
+						editing: this.props.editing
+					}) },
+				_react2.default.createElement(
+					'div',
+					{ className: 'view' },
+					_react2.default.createElement(
+						'label',
+						{ onDoubleClick: this.handleEdit },
+						'item: ',
+						this.state.editText
+					),
+					_react2.default.createElement(
+						'p',
+						null,
+						'amount: ',
+						this.props.amount
+					),
+					_react2.default.createElement(
+						'form',
+						{ method: 'post', action: '/profile/' },
+						_react2.default.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie }),
+						_react2.default.createElement('button', { className: 'destroy', onClick: this.props.onDestroy })
+					)
+				),
+				_react2.default.createElement('input', {
+					ref: 'editField',
+					className: 'edit',
+					value: this.state.editText,
+					onChange: this.handleChange,
+					onBlur: this.handleSubmit,
+					onKeyDown: this.handleKeyDown
+	
+				})
+			);
+		}
+	});
+	
+	module.exports = UserItem;
+
+/***/ },
 /* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -26892,7 +26999,7 @@
 					),
 					React.createElement("input", { id: "qty", name: "qty" }),
 					React.createElement("input", { type: "hidden", name: "action", value: "new" }),
-					React.createElement("input", { type: "submit", className: "button" })
+					React.createElement("input", { type: "submit", className: "button", value: "Submit" })
 				)
 			);
 		}
@@ -26915,8 +27022,7 @@
 	
 	
 		render: function render() {
-			/*		$.get('/')
-	  */console.log(marketItems);
+			console.log(marketItems);
 	
 			//return inventory of items
 			return React.createElement(
@@ -26948,7 +27054,7 @@
 	
 	var _reactRouter2 = _interopRequireDefault(_reactRouter);
 	
-	var _fullItem = __webpack_require__(247);
+	var _fullItem = __webpack_require__(242);
 	
 	var _fullItem2 = _interopRequireDefault(_fullItem);
 	
@@ -26998,6 +27104,8 @@
 							name: item.name,
 							amount: item.amount,
 							creator: item.creator,
+							street: item.street,
+							state: item.state,
 							onEdit: this.edit.bind(this, item),
 							onSave: this.save.bind(this, item),
 							editing: this.state.editing === item.id
@@ -27012,6 +27120,136 @@
 
 /***/ },
 /* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(33);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _classnames = __webpack_require__(238);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	var _reactRouter = __webpack_require__(170);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	//library for setting class names for DOM elements by referring it to a boolean value
+	
+	
+	var ESCAPE_KEY = 27;
+	var ENTER_KEY = 13;
+	
+	var FullItem = _react2.default.createClass({
+		displayName: 'FullItem',
+	
+		getInitialState: function getInitialState() {
+			return { editText: this.props.name };
+		},
+		handleEdit: function handleEdit() {
+			this.props.onEdit();
+			//setting this setState will cause the text to revert to the previous state before refresh... need to think on this
+			//this.setState({editText: this.props.name});
+		},
+		handleChange: function handleChange(event) {
+			if (this.props.editing) {
+				this.setState({ editText: event.target.value });
+			}
+		},
+		handleKeyDown: function handleKeyDown(event) {
+			if (event.which === ESCAPE_KEY) {
+				this.setState({ editText: this.props.todo.title });
+				this.props.onCancel(event);
+			} else if (event.which === ENTER_KEY) {
+				this.handleSubmit(event);
+			}
+		},
+		handleSubmit: function handleSubmit(event) {
+			var val = this.state.editText.trim();
+			if (val) {
+				this.props.onSave(val);
+				this.setState({ editText: val });
+			} else {
+				//this.props.onDestroy()
+			}
+		},
+		componentDidUpdate: function componentDidUpdate(prevProps) {
+			if (!prevProps.editing && this.props.editing) {
+				var node = _reactDom2.default.findDOMNode(this.refs.editField);
+				node.focus();
+				node.setSelectionRange(node.value.length, node.value.length);
+			}
+		},
+		render: function render() {
+			var link = this.state.editText + '/buy';
+			return _react2.default.createElement(
+				'li',
+				{ className: (0, _classnames2.default)({
+						editing: this.props.editing
+					}) },
+				_react2.default.createElement(
+					'div',
+					{ className: 'view' },
+					_react2.default.createElement(
+						'label',
+						null,
+						'item: ',
+						this.state.editText
+					),
+					_react2.default.createElement(
+						'p',
+						null,
+						'amount: ',
+						this.props.amount
+					),
+					_react2.default.createElement(
+						'p',
+						null,
+						' user: ',
+						this.props.creator
+					),
+					_react2.default.createElement(
+						'p',
+						null,
+						' ',
+						this.props.street,
+						', ',
+						this.props.state
+					),
+					_react2.default.createElement(
+						'form',
+						{ method: 'post', action: '/profile/' },
+						_react2.default.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie })
+					),
+					_react2.default.createElement(
+						_reactRouter.Link,
+						{ to: '{link}' },
+						'Trade/Buy'
+					)
+				),
+				_react2.default.createElement('input', {
+					ref: 'editField',
+					className: 'edit',
+					value: this.state.editText,
+					onChange: this.handleChange,
+					onBlur: this.handleSubmit,
+					onKeyDown: this.handleKeyDown
+	
+				})
+			);
+		}
+	});
+	
+	module.exports = FullItem;
+
+/***/ },
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27044,6 +27282,7 @@
 					React.createElement('input', { id: 'username', name: 'username', type: 'text',
 						placeholder: 'Your account name',
 						autocomplete: 'off' }),
+					React.createElement('br', null),
 					React.createElement(
 						'label',
 						{ 'for': 'password' },
@@ -27056,7 +27295,8 @@
 					React.createElement('input', { id: 'password', name: 'password', type: 'password',
 						placeholder: 'Your password',
 						autocomplete: 'off' }),
-					React.createElement('input', { type: 'submit', 'class': 'button' }),
+					React.createElement('input', { type: 'submit', 'class': 'button', value: 'Log In' }),
+					React.createElement('br', null),
 					React.createElement(
 						_reactRouter.Link,
 						{ to: '/signup/' },
@@ -27070,7 +27310,7 @@
 	module.exports = Login;
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27159,7 +27399,7 @@
 	module.exports = SignUp;
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -43567,10 +43807,10 @@
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(245)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(246)(module), (function() { return this; }())))
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -43584,233 +43824,6 @@
 		return module;
 	}
 
-
-/***/ },
-/* 246 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(33);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _classnames = __webpack_require__(238);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var ESCAPE_KEY = 27;
-	//library for setting class names for DOM elements by referring it to a boolean value
-	
-	var ENTER_KEY = 13;
-	
-	var UserItem = _react2.default.createClass({
-		displayName: 'UserItem',
-	
-		getInitialState: function getInitialState() {
-			return { editText: this.props.name };
-		},
-		handleEdit: function handleEdit() {
-			this.props.onEdit();
-			//setting this setState will cause the text to revert to the previous state before refresh... need to think on this
-			//this.setState({editText: this.props.name});
-		},
-		handleChange: function handleChange(event) {
-			if (this.props.editing) {
-				this.setState({ editText: event.target.value });
-			}
-		},
-		handleKeyDown: function handleKeyDown(event) {
-			if (event.which === ESCAPE_KEY) {
-				this.setState({ editText: this.props.todo.title });
-				this.props.onCancel(event);
-			} else if (event.which === ENTER_KEY) {
-				this.handleSubmit(event);
-			}
-		},
-		handleSubmit: function handleSubmit(event) {
-			var val = this.state.editText.trim();
-			if (val) {
-				this.props.onSave(val);
-				this.setState({ editText: val });
-			} else {
-				//this.props.onDestroy()
-			}
-		},
-		componentDidUpdate: function componentDidUpdate(prevProps) {
-			if (!prevProps.editing && this.props.editing) {
-				var node = _reactDom2.default.findDOMNode(this.refs.editField);
-				node.focus();
-				node.setSelectionRange(node.value.length, node.value.length);
-			}
-		},
-		render: function render() {
-			return _react2.default.createElement(
-				'li',
-				{ className: (0, _classnames2.default)({
-						editing: this.props.editing
-					}) },
-				_react2.default.createElement(
-					'div',
-					{ className: 'view' },
-					_react2.default.createElement(
-						'label',
-						{ onDoubleClick: this.handleEdit },
-						'item: ',
-						this.state.editText
-					),
-					_react2.default.createElement(
-						'label',
-						null,
-						'amount: ',
-						this.props.amount
-					),
-					_react2.default.createElement(
-						'label',
-						null,
-						' user: ',
-						this.props.creator
-					),
-					_react2.default.createElement(
-						'form',
-						{ method: 'post', action: '/profile/' },
-						_react2.default.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie }),
-						_react2.default.createElement('button', { className: 'destroy', onClick: this.props.onDestroy })
-					)
-				),
-				_react2.default.createElement('input', {
-					ref: 'editField',
-					className: 'edit',
-					value: this.state.editText,
-					onChange: this.handleChange,
-					onBlur: this.handleSubmit,
-					onKeyDown: this.handleKeyDown
-	
-				})
-			);
-		}
-	});
-	
-	module.exports = UserItem;
-
-/***/ },
-/* 247 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(33);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _classnames = __webpack_require__(238);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var ESCAPE_KEY = 27;
-	//library for setting class names for DOM elements by referring it to a boolean value
-	
-	var ENTER_KEY = 13;
-	
-	var FullItem = _react2.default.createClass({
-		displayName: 'FullItem',
-	
-		getInitialState: function getInitialState() {
-			return { editText: this.props.name };
-		},
-		handleEdit: function handleEdit() {
-			this.props.onEdit();
-			//setting this setState will cause the text to revert to the previous state before refresh... need to think on this
-			//this.setState({editText: this.props.name});
-		},
-		handleChange: function handleChange(event) {
-			if (this.props.editing) {
-				this.setState({ editText: event.target.value });
-			}
-		},
-		handleKeyDown: function handleKeyDown(event) {
-			if (event.which === ESCAPE_KEY) {
-				this.setState({ editText: this.props.todo.title });
-				this.props.onCancel(event);
-			} else if (event.which === ENTER_KEY) {
-				this.handleSubmit(event);
-			}
-		},
-		handleSubmit: function handleSubmit(event) {
-			var val = this.state.editText.trim();
-			if (val) {
-				this.props.onSave(val);
-				this.setState({ editText: val });
-			} else {
-				//this.props.onDestroy()
-			}
-		},
-		componentDidUpdate: function componentDidUpdate(prevProps) {
-			if (!prevProps.editing && this.props.editing) {
-				var node = _reactDom2.default.findDOMNode(this.refs.editField);
-				node.focus();
-				node.setSelectionRange(node.value.length, node.value.length);
-			}
-		},
-		render: function render() {
-			return _react2.default.createElement(
-				'li',
-				{ className: (0, _classnames2.default)({
-						editing: this.props.editing
-					}) },
-				_react2.default.createElement(
-					'div',
-					{ className: 'view' },
-					_react2.default.createElement(
-						'label',
-						{ onDoubleClick: this.handleEdit },
-						'item: ',
-						this.state.editText
-					),
-					_react2.default.createElement(
-						'label',
-						null,
-						'amount: ',
-						this.props.amount
-					),
-					_react2.default.createElement(
-						'label',
-						null,
-						' user: ',
-						this.props.creator
-					),
-					_react2.default.createElement(
-						'form',
-						{ method: 'post', action: '/profile/' },
-						_react2.default.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie })
-					)
-				),
-				_react2.default.createElement('input', {
-					ref: 'editField',
-					className: 'edit',
-					value: this.state.editText,
-					onChange: this.handleChange,
-					onBlur: this.handleSubmit,
-					onKeyDown: this.handleKeyDown
-	
-				})
-			);
-		}
-	});
-	
-	module.exports = FullItem;
 
 /***/ }
 /******/ ]);

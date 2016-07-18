@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 //library for setting class names for DOM elements by referring it to a boolean value
 import classNames from 'classnames'
+import {Link} from 'react-router'
 
 
 var ESCAPE_KEY = 27
@@ -47,18 +48,21 @@ var FullItem = React.createClass({
 		}
 	},
 	render: function(){
+		var link = this.state.editText + '/buy'
 		return(
 			<li className={classNames({
 				editing: this.props.editing
 			})}>
 				<div className="view"> 
-					<label onDoubleClick={this.handleEdit}> 
+					<label> 
 					item: {this.state.editText}</label> 
-					<label>amount: {this.props.amount}</label>
-					<label> user: {this.props.creator}</label>
+					<p>amount: {this.props.amount}</p>
+					<p> user: {this.props.creator}</p>
+					<p> {this.props.street}, {this.props.state}</p>
 					<form method="post" action="/profile/">
 						<input type="hidden" name="csrfmiddlewaretoken" value={cookie} />
 					</form>
+					<Link to= "{link}" >Trade/Buy</Link>
 				</div>
 				<input
 					ref="editField"

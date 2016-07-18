@@ -37,6 +37,8 @@ var FullInventory = React.createClass({
 							name={item.name} 
 							amount={item.amount}
 							creator = {item.creator}
+							street = {item.street}
+							state = {item.state}
 							onEdit={this.edit.bind(this, item)}
 							onSave={this.save.bind(this, item)}
 							editing={this.state.editing === item.id}

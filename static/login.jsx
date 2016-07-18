@@ -11,11 +11,13 @@ var Login = React.createClass({
 				<input id="username" name="username" type="text"
 				       placeholder="Your account name"
 				       autocomplete="off" />
+				<br />
 		       <label for="password"><h3>Password</h3></label>
 		       <input id="password" name="password" type="password"
 		              placeholder="Your password"
 		              autocomplete="off" />
-		              <input type="submit" class="button" />
+		              <input type="submit" class="button" value="Log In" />
+		        <br />
 		        <Link to="/signup/">No Account? Sign Up</Link>
 		       </form>
 			</div>
