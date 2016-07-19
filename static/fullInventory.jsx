@@ -9,6 +9,7 @@ var FullInventory = React.createClass({
 		return{
 			nowShowing: marketItems,
 			editing: null,
+			buying: null,
 			newItem: ''
 		}
 	},
@@ -26,6 +27,9 @@ var FullInventory = React.createClass({
 	edit: function (item) {
 		this.setState({editing: item.id})
 	},
+	buy: function (item){
+		this.setState({buying: item.id})
+	},
 	render: function(){		
 		return(
 			<div>
@@ -40,12 +44,13 @@ var FullInventory = React.createClass({
 							creator = {item.creator}
 							street = {item.street}
 							state = {item.state}
-							onEdit={this.edit.bind(this, item)}
+							onBuy={this.buy.bind(this, item)}
 							onSave={this.save.bind(this, item)}
 							editing={this.state.editing === item.id}
 						/>
 						<Buy
 							name={item.name}
+							buying={this.state.buying === item.id}
 						/>					
 					</div>
 					)

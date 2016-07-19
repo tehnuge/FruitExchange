@@ -26859,8 +26859,6 @@
 		},
 		handleEdit: function handleEdit() {
 			this.props.onEdit();
-			//setting this setState will cause the text to revert to the previous state before refresh... need to think on this
-			//this.setState({editText: this.props.name});
 		},
 		handleChange: function handleChange(event) {
 			if (this.props.editing) {
@@ -27096,6 +27094,7 @@
 			return {
 				nowShowing: marketItems,
 				editing: null,
+				buying: null,
 				newItem: ''
 			};
 		},
@@ -27112,6 +27111,9 @@
 		},
 		edit: function edit(item) {
 			this.setState({ editing: item.id });
+		},
+		buy: function buy(item) {
+			this.setState({ buying: item.id });
 		},
 		render: function render() {
 			return _react2.default.createElement(
@@ -27133,12 +27135,13 @@
 							creator: item.creator,
 							street: item.street,
 							state: item.state,
-							onEdit: this.edit.bind(this, item),
+							onBuy: this.buy.bind(this, item),
 							onSave: this.save.bind(this, item),
 							editing: this.state.editing === item.id
 						}),
 						_react2.default.createElement(_buy2.default, {
-							name: item.name
+							name: item.name,
+							buying: this.state.buying === item.id
 						})
 					);
 				}, this)
@@ -27181,8 +27184,8 @@
 		getInitialState: function getInitialState() {
 			return { editText: this.props.name };
 		},
-		handleEdit: function handleEdit() {
-			this.props.onEdit();
+		handleBuy: function handleBuy() {
+			this.props.onBuy();
 			//setting this setState will cause the text to revert to the previous state before refresh... need to think on this
 			//this.setState({editText: this.props.name});
 		},
@@ -27246,12 +27249,7 @@
 					', ',
 					this.props.state
 				),
-				_react2.default.createElement(
-					_navlink2.default,
-					{ to: link },
-					'Trade/Buy'
-				),
-				this.props.children
+				_react2.default.createElement('input', { type: 'button', value: 'Trade/Buy', onClick: this.handleBuy })
 			);
 		}
 	});
@@ -43845,6 +43843,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _classnames = __webpack_require__(238);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Buy = _react2.default.createClass({
@@ -43852,9 +43854,22 @@
 	
 		render: function render() {
 			return _react2.default.createElement(
-				'h1',
-				null,
-				this.props.name
+				'div',
+				{ className: (0, _classnames2.default)({
+						buying: this.props.buying
+					}) },
+				_react2.default.createElement(
+					'b',
+					null,
+					'To Buy: ',
+					this.props.name
+				),
+				_react2.default.createElement(
+					'form',
+					{ method: 'post', action: '/profile/modify_item' },
+					_react2.default.createElement('input', { placeholder: 'amount', name: 'amount' }),
+					_react2.default.createElement('input', { type: 'submit', value: 'Submit' })
+				)
 			);
 		}
 	});

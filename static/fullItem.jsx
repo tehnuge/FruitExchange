@@ -12,8 +12,8 @@ var FullItem = React.createClass({
 	getInitialState: function () {
 		return {editText: this.props.name};
 	},
-	handleEdit: function () {
-		this.props.onEdit();
+	handleBuy: function () {
+		this.props.onBuy();
 		//setting this setState will cause the text to revert to the previous state before refresh... need to think on this
 		//this.setState({editText: this.props.name});
 	},
@@ -55,9 +55,7 @@ var FullItem = React.createClass({
 					<p>amount: {this.props.amount}</p>
 					<p> user: {this.props.creator}</p>
 					<p> {this.props.street}, {this.props.state}</p>
-					<Navlink to= {link} >Trade/Buy</Navlink>
-					{this.props.children}
-
+					<input type="button" value="Trade/Buy" onClick={this.handleBuy} />
 				</div>
 			)
 	}
