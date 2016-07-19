@@ -3,3 +3,10 @@
 .active {
   color: green;
 }
+.buy{
+	display:none;
+}
+
+.buy.buying{
+	display:block;
+}

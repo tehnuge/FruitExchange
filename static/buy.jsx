@@ -4,7 +4,7 @@ import classNames from 'classnames'
 let Buy = React.createClass({
 	render: function() {
 		return(
-			<div className={classNames({
+			<div className={classNames('buy',{
 				buying: this.props.buying
 			})}>
 				<b>

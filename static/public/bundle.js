@@ -43855,7 +43855,7 @@
 		render: function render() {
 			return _react2.default.createElement(
 				'div',
-				{ className: (0, _classnames2.default)({
+				{ className: (0, _classnames2.default)('buy', {
 						buying: this.props.buying
 					}) },
 				_react2.default.createElement(
