@@ -46,12 +46,13 @@ def index(request):
 	return render(request, 'index.html', context)
 
 #NOT BEING USED BY profile.jsx anymore, DELETE??? API for updating the 'inventory' global variable
-#I dont need to alter the 'inventory' variable since react is taking care of how it looks, but i
-#couldnt figure it out anyway
+#I dont need to alter the 'inventory' variable since react is taking care of how it looks
+'''
 def update_items(request):
 	context = get_creator_items(request)
 	print "is ajax!!!"
 	return HttpResponse(context['inventory'], content_type="application/json")
+'''
 
 #editing items
 def modify_item(request):
@@ -66,7 +67,6 @@ def modify_item(request):
 	if request.is_ajax() and request.POST.get('action') == 'destroy':
 		itemid = request.POST.get('id')
 		Produce.objects.filter(id=itemid).delete()
-	#TODO: not reassigning inventory like I would want right now....
 	context = get_creator_items(request)
 	return render(request, 'index.html', context)
 

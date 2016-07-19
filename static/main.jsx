@@ -12,6 +12,7 @@ var Main = React.createClass({
 			<div>
 				<h1>The Market</h1>
 				<FullInventory />
+				{this.props.children}
 			</div>
 			)
 	}

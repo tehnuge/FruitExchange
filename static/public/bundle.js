@@ -26579,6 +26579,14 @@
 	
 	var _signup2 = _interopRequireDefault(_signup);
 	
+	var _buy = __webpack_require__(247);
+	
+	var _buy2 = _interopRequireDefault(_buy);
+	
+	var _home = __webpack_require__(248);
+	
+	var _home2 = _interopRequireDefault(_home);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	module.exports = _react2.default.createElement(
@@ -26587,7 +26595,12 @@
 			_react2.default.createElement(
 					_reactRouter.Route,
 					{ path: '/', component: _navbar2.default },
-					_react2.default.createElement(_reactRouter.IndexRoute, { component: _main2.default }),
+					_react2.default.createElement(_reactRouter.IndexRoute, { component: _home2.default }),
+					_react2.default.createElement(
+							_reactRouter.Route,
+							{ path: '/main', component: _main2.default },
+							_react2.default.createElement(_reactRouter.Route, { path: '/main/:itemName', component: _buy2.default })
+					),
 					_react2.default.createElement(
 							_reactRouter.Route,
 							{ path: '/profile', component: _profile2.default },
@@ -26629,6 +26642,15 @@
 							Navlink,
 							{ to: '/', onlyActiveOnIndex: true },
 							'Home '
+						)
+					),
+					React.createElement(
+						'li',
+						null,
+						React.createElement(
+							Navlink,
+							{ to: '/main' },
+							'Main'
 						)
 					),
 					React.createElement(
@@ -27033,7 +27055,8 @@
 					null,
 					'The Market'
 				),
-				React.createElement(FullInventory, null)
+				React.createElement(FullInventory, null),
+				this.props.children
 			);
 		}
 	});
@@ -27057,6 +27080,10 @@
 	var _fullItem = __webpack_require__(242);
 	
 	var _fullItem2 = _interopRequireDefault(_fullItem);
+	
+	var _buy = __webpack_require__(247);
+	
+	var _buy2 = _interopRequireDefault(_buy);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -27109,6 +27136,9 @@
 							onEdit: this.edit.bind(this, item),
 							onSave: this.save.bind(this, item),
 							editing: this.state.editing === item.id
+						}),
+						_react2.default.createElement(_buy2.default, {
+							name: item.name
 						})
 					);
 				}, this)
@@ -27128,22 +27158,21 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(33);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
 	var _classnames = __webpack_require__(238);
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
 	var _reactRouter = __webpack_require__(170);
 	
+	var _navlink = __webpack_require__(234);
+	
+	var _navlink2 = _interopRequireDefault(_navlink);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	var ESCAPE_KEY = 27;
 	//library for setting class names for DOM elements by referring it to a boolean value
 	
-	
-	var ESCAPE_KEY = 27;
 	var ENTER_KEY = 13;
 	
 	var FullItem = _react2.default.createClass({
@@ -27181,67 +27210,48 @@
 		},
 		componentDidUpdate: function componentDidUpdate(prevProps) {
 			if (!prevProps.editing && this.props.editing) {
-				var node = _reactDom2.default.findDOMNode(this.refs.editField);
+				var node = ReactDOM.findDOMNode(this.refs.editField);
 				node.focus();
 				node.setSelectionRange(node.value.length, node.value.length);
 			}
 		},
 		render: function render() {
-			var link = this.state.editText + '/buy';
+			var link = '/main/' + this.props.name;
 			return _react2.default.createElement(
-				'li',
-				{ className: (0, _classnames2.default)({
-						editing: this.props.editing
-					}) },
+				'div',
+				{ className: 'view' },
 				_react2.default.createElement(
-					'div',
-					{ className: 'view' },
-					_react2.default.createElement(
-						'label',
-						null,
-						'item: ',
-						this.state.editText
-					),
-					_react2.default.createElement(
-						'p',
-						null,
-						'amount: ',
-						this.props.amount
-					),
-					_react2.default.createElement(
-						'p',
-						null,
-						' user: ',
-						this.props.creator
-					),
-					_react2.default.createElement(
-						'p',
-						null,
-						' ',
-						this.props.street,
-						', ',
-						this.props.state
-					),
-					_react2.default.createElement(
-						'form',
-						{ method: 'post', action: '/profile/' },
-						_react2.default.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie })
-					),
-					_react2.default.createElement(
-						_reactRouter.Link,
-						{ to: '{link}' },
-						'Trade/Buy'
-					)
+					'b',
+					null,
+					'item: ',
+					this.state.editText
 				),
-				_react2.default.createElement('input', {
-					ref: 'editField',
-					className: 'edit',
-					value: this.state.editText,
-					onChange: this.handleChange,
-					onBlur: this.handleSubmit,
-					onKeyDown: this.handleKeyDown
-	
-				})
+				_react2.default.createElement(
+					'p',
+					null,
+					'amount: ',
+					this.props.amount
+				),
+				_react2.default.createElement(
+					'p',
+					null,
+					' user: ',
+					this.props.creator
+				),
+				_react2.default.createElement(
+					'p',
+					null,
+					' ',
+					this.props.street,
+					', ',
+					this.props.state
+				),
+				_react2.default.createElement(
+					_navlink2.default,
+					{ to: link },
+					'Trade/Buy'
+				),
+				this.props.children
 			);
 		}
 	});
@@ -43824,6 +43834,59 @@
 		return module;
 	}
 
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Buy = _react2.default.createClass({
+		displayName: 'Buy',
+	
+		render: function render() {
+			return _react2.default.createElement(
+				'h1',
+				null,
+				this.props.name
+			);
+		}
+	});
+	
+	module.exports = Buy;
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = _react2.default.createClass({
+		displayName: 'home',
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				'Home'
+			);
+		}
+	});
 
 /***/ }
 /******/ ]);

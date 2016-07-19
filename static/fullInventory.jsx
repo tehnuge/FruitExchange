@@ -1,6 +1,7 @@
 import React from 'react'
 import Router from 'react-router'
 import FullItem from './fullItem'
+import Buy from './buy'
 var postUrl = '/profile/modify_item/'
 
 var FullInventory = React.createClass({
@@ -42,6 +43,9 @@ var FullInventory = React.createClass({
 							onEdit={this.edit.bind(this, item)}
 							onSave={this.save.bind(this, item)}
 							editing={this.state.editing === item.id}
+						/>
+						<Buy
+							name={item.name}
 						/>					
 					</div>
 					)

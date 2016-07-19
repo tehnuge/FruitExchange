@@ -17,3 +17,9 @@ class Location(models.Model):
 	street = models.CharField(max_length=100)
 	city = models.CharField(max_length=100)
 	state = models.CharField(max_length = 100)
+'''
+class Transaction(models.Model):
+	buyer = models.OneToOneField(settings.AUTH_USER_MODEL, null=True)
+	seller = models.OneToOneField(settings.AUTH_USER_MODEL, null=True)
+	amount = models.IntegerField(default=1)
+'''
