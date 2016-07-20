@@ -25,19 +25,21 @@ var SignUp = React.createClass({
 				<h2>Sign Up </h2>
 					<form method="post" action="/signup/">
 					<input type="hidden" name="csrfmiddlewaretoken" value={cookie} />
-					<label for="username"><h3>Account Name</h3></label>
+					<b>Account Name </b>
 					<input id="username" name="username" type="text"
 					       placeholder="Your account name"
 					       autocomplete="off" />
-			       <label for="password"><h3>Password</h3></label>
-			       <input id="password" name="password" type="password"
+					<br />
+					<b>Password </b>
+			       	<input id="password" name="password" type="password"
 			              placeholder="Your password"
 			              autocomplete="off" />
-	              <label for="password2"><h3>Password</h3></label>
-	              <input id="password2" name="password2" type="password"
+			        <br />
+					<b>Password again </b>
+	              	<input id="password2" name="password2" type="password"
 	                     placeholder="Type your password again"
 	                     autocomplete="off" />
-			              <input type="submit" class="button" onClick = {this.handleSubmit} />
+			              <input type="submit" class="button" value="Submit" onClick = {this.handleSubmit} />
 			       </form>
 				</div>
 			)

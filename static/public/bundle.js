@@ -27307,13 +27307,8 @@
 					'To Buy: ',
 					this.props.name
 				),
-				_react2.default.createElement(
-					'form',
-					{ method: 'post', action: '/profile/modify_item/' },
-					_react2.default.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie }),
-					_react2.default.createElement('input', { placeholder: 'amount', name: 'buyAmount', onChange: this.handleChange }),
-					_react2.default.createElement('input', { type: 'submit', value: 'Submit', onClick: this.handleSubmit })
-				)
+				_react2.default.createElement('input', { placeholder: 'amount', name: 'buyAmount', onChange: this.handleChange }),
+				_react2.default.createElement('input', { type: 'submit', value: 'Submit', onClick: this.handleSubmit })
 			);
 		}
 	});
@@ -27419,42 +27414,32 @@
 					{ method: 'post', action: '/signup/' },
 					_react2.default.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie }),
 					_react2.default.createElement(
-						'label',
-						{ 'for': 'username' },
-						_react2.default.createElement(
-							'h3',
-							null,
-							'Account Name'
-						)
+						'b',
+						null,
+						'Account Name '
 					),
 					_react2.default.createElement('input', { id: 'username', name: 'username', type: 'text',
 						placeholder: 'Your account name',
 						autocomplete: 'off' }),
+					_react2.default.createElement('br', null),
 					_react2.default.createElement(
-						'label',
-						{ 'for': 'password' },
-						_react2.default.createElement(
-							'h3',
-							null,
-							'Password'
-						)
+						'b',
+						null,
+						'Password '
 					),
 					_react2.default.createElement('input', { id: 'password', name: 'password', type: 'password',
 						placeholder: 'Your password',
 						autocomplete: 'off' }),
+					_react2.default.createElement('br', null),
 					_react2.default.createElement(
-						'label',
-						{ 'for': 'password2' },
-						_react2.default.createElement(
-							'h3',
-							null,
-							'Password'
-						)
+						'b',
+						null,
+						'Password again '
 					),
 					_react2.default.createElement('input', { id: 'password2', name: 'password2', type: 'password',
 						placeholder: 'Type your password again',
 						autocomplete: 'off' }),
-					_react2.default.createElement('input', { type: 'submit', 'class': 'button', onClick: this.handleSubmit })
+					_react2.default.createElement('input', { type: 'submit', 'class': 'button', value: 'Submit', onClick: this.handleSubmit })
 				)
 			);
 		}

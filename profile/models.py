@@ -20,8 +20,8 @@ class Location(models.Model):
 	state = models.CharField(max_length = 100)
 
 class Transaction(models.Model):
-	buyer = models.OneToOneField(settings.AUTH_USER_MODEL, null=False, related_name='buyer')
-	seller = models.OneToOneField(settings.AUTH_USER_MODEL, null=False, related_name='seller')
+	buyer = models.ForeignKey(settings.AUTH_USER_MODEL, null=False, related_name='buyer')
+	seller = models.ForeignKey(settings.AUTH_USER_MODEL, null=False, related_name='seller')
 	item = models.CharField(max_length=100)
 	amount = models.IntegerField(default=1)
 	date = models.DateTimeField(default=datetime.now)

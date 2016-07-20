@@ -35,11 +35,8 @@ let Buy = React.createClass({
 				<b>
 					To Buy: {this.props.name}
 				</b>
-				<form method="post" action = "/profile/modify_item/">
-					<input type="hidden" name="csrfmiddlewaretoken" value={cookie} />
 					<input placeholder="amount" name="buyAmount" onChange={this.handleChange} />
 					<input type="submit" value="Submit" onClick={this.handleSubmit} />
-				</form>
 			</div>)
 	}
 })
