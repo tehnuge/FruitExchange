@@ -1,6 +1,6 @@
 import json
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from .models import Produce
+from .models import Produce, Transaction
 from django.template import RequestContext
 from django.shortcuts import render, get_object_or_404, render_to_response, redirect
 
@@ -68,11 +68,16 @@ def modify_item(request):
 	if request.is_ajax() and request.POST.get('action') == 'destroy':
 		itemid = request.POST.get('id')
 		Produce.objects.filter(id=itemid).delete()
-	if request.is_ajax() and request.POST.get('action') == 'buy':
+	if request.POST.get('action') == 'buy':
+		print request.POST
 		itemid = request.POST.get('id')
-		seller = request.POST.get('creator')
+		item = request.POST.get('name')
+		seller = Produce.objects.get(id=itemid).creator
 		buyer = request.user
-		print 'creator:', seller
+		buyAmount = request.POST.get('buyAmount')
+		newTrans = Transaction(buyer=buyer, seller=seller, item=item, amount=buyAmount)
+		newTrans.save()
+		#print 'number:', number
 	context = get_creator_items(request)
 	return render(request, 'index.html', context)
 

@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.conf import settings
 from django.contrib.auth.models import User
+from datetime import datetime
 
 
 from django.db import models
@@ -23,4 +24,4 @@ class Transaction(models.Model):
 	seller = models.OneToOneField(settings.AUTH_USER_MODEL, null=False, related_name='seller')
 	item = models.CharField(max_length=100)
 	amount = models.IntegerField(default=1)
-	date = models.DateField()
+	date = models.DateTimeField(default=datetime.now)

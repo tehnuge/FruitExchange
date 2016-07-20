@@ -60,7 +60,7 @@
 	
 	var _routes2 = _interopRequireDefault(_routes);
 	
-	var _lodash = __webpack_require__(245);
+	var _lodash = __webpack_require__(247);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
@@ -26567,7 +26567,7 @@
 	
 	var _main2 = _interopRequireDefault(_main);
 	
-	var _login = __webpack_require__(243);
+	var _login = __webpack_require__(244);
 	
 	var _login2 = _interopRequireDefault(_login);
 	
@@ -26575,15 +26575,15 @@
 	
 	var _userItem2 = _interopRequireDefault(_userItem);
 	
-	var _signup = __webpack_require__(244);
+	var _signup = __webpack_require__(245);
 	
 	var _signup2 = _interopRequireDefault(_signup);
 	
-	var _buy = __webpack_require__(247);
+	var _buy = __webpack_require__(243);
 	
 	var _buy2 = _interopRequireDefault(_buy);
 	
-	var _home = __webpack_require__(248);
+	var _home = __webpack_require__(246);
 	
 	var _home2 = _interopRequireDefault(_home);
 	
@@ -27078,7 +27078,7 @@
 	
 	var _fullItem2 = _interopRequireDefault(_fullItem);
 	
-	var _buy = __webpack_require__(247);
+	var _buy = __webpack_require__(243);
 	
 	var _buy2 = _interopRequireDefault(_buy);
 	
@@ -27098,9 +27098,9 @@
 			};
 		},
 		//save a 'buy' transaction
-		save: function save(trans, text) {
-			//append new text to the trans object and save it
-			console.log('text:', text);
+		save: function save(trans, buyAmount) {
+			//append new buyAmount to the trans object and save it
+			trans['buyAmount'] = buyAmount;
 			trans['action'] = 'buy';
 			$.post(postUrl, trans, function () {
 				console.log("buy success!");
@@ -27257,6 +27257,75 @@
 
 	'use strict';
 	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _classnames = __webpack_require__(238);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ESCAPE_KEY = 27;
+	var ENTER_KEY = 13;
+	
+	function isInt(value) {
+		if (isNaN(value)) {
+			return false;
+		}
+		var x = parseFloat(value);
+		return (x | 0) === x;
+	}
+	
+	var Buy = _react2.default.createClass({
+		displayName: 'Buy',
+	
+		getInitialState: function getInitialState() {
+			return { buyAmount: null };
+		},
+		handleChange: function handleChange(e) {
+			if (isInt(e.target.value)) {
+				this.setState({ buyAmount: e.target.value });
+			} else {
+				console.log('Not a number');
+			}
+		},
+		handleSubmit: function handleSubmit(e) {
+			var val = this.state.buyAmount.trim();
+			this.props.onSave(val);
+		},
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				{ className: (0, _classnames2.default)('buy', {
+						buying: this.props.buying
+					}) },
+				_react2.default.createElement(
+					'b',
+					null,
+					'To Buy: ',
+					this.props.name
+				),
+				_react2.default.createElement(
+					'form',
+					{ method: 'post', action: '/profile/modify_item/' },
+					_react2.default.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie }),
+					_react2.default.createElement('input', { placeholder: 'amount', name: 'buyAmount', onChange: this.handleChange }),
+					_react2.default.createElement('input', { type: 'submit', value: 'Submit', onClick: this.handleSubmit })
+				)
+			);
+		}
+	});
+	
+	module.exports = Buy;
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
 	var _reactRouter = __webpack_require__(170);
 	
 	var React = __webpack_require__(1);
@@ -27305,7 +27374,7 @@
 	module.exports = Login;
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27394,7 +27463,46 @@
 	module.exports = SignUp;
 
 /***/ },
-/* 245 */
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(170);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = _react2.default.createClass({
+		displayName: 'home',
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'b',
+					null,
+					'The Fruit Exchange is a marketplace for homegrown fruits and produce from your backyard.'
+				),
+				_react2.default.createElement('br', null),
+				_react2.default.createElement(
+					_reactRouter.Link,
+					{ to: '/signup/' },
+					'No Account? Sign Up'
+				)
+			);
+		}
+	});
+
+/***/ },
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -43802,10 +43910,10 @@
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(246)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(248)(module), (function() { return this; }())))
 
 /***/ },
-/* 246 */
+/* 248 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -43819,89 +43927,6 @@
 		return module;
 	}
 
-
-/***/ },
-/* 247 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _classnames = __webpack_require__(238);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Buy = _react2.default.createClass({
-		displayName: 'Buy',
-	
-		render: function render() {
-			return _react2.default.createElement(
-				'div',
-				{ className: (0, _classnames2.default)('buy', {
-						buying: this.props.buying
-					}) },
-				_react2.default.createElement(
-					'b',
-					null,
-					'To Buy: ',
-					this.props.name
-				),
-				_react2.default.createElement(
-					'form',
-					{ method: 'post' },
-					_react2.default.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie }),
-					_react2.default.createElement('input', { placeholder: 'amount', name: 'amount' }),
-					_react2.default.createElement('input', { type: 'submit', value: 'Submit', onClick: this.props.onSave })
-				)
-			);
-		}
-	});
-	
-	module.exports = Buy;
-
-/***/ },
-/* 248 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(170);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = _react2.default.createClass({
-		displayName: 'home',
-		render: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'b',
-					null,
-					'The Fruit Exchange is a marketplace for homegrown fruits and produce from your backyard.'
-				),
-				_react2.default.createElement('br', null),
-				_react2.default.createElement(
-					_reactRouter.Link,
-					{ to: '/signup/' },
-					'No Account? Sign Up'
-				)
-			);
-		}
-	});
 
 /***/ }
 /******/ ]);

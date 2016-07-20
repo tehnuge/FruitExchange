@@ -14,9 +14,9 @@ var FullInventory = React.createClass({
 		}
 	},
 	//save a 'buy' transaction
-	save: function (trans, text) {
-		//append new text to the trans object and save it
-		console.log('text:', text);
+	save: function (trans, buyAmount) {
+		//append new buyAmount to the trans object and save it
+		trans['buyAmount'] = buyAmount;
 		trans['action'] = 'buy';
 		$.post(postUrl, trans, function(){
 			console.log("buy success!")

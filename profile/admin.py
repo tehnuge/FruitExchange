@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
-from .models import Produce
-from .models import Location
+from .models import Produce, Location, Transaction
 
 admin.site.register(Produce)
+admin.site.register(Transaction)
 # Register your models here.
 
 class LocationInline(admin.StackedInline):
