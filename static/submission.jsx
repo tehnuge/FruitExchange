@@ -1,11 +1,7 @@
-var React = require('react')
+import React from 'react'
 
 var Submission = React.createClass({
 	render: function() {
-		var createFruit = function(fruit) {
-
-			
-		}
 		return(
 			<div>
 			<form method="post" action="/profile/">

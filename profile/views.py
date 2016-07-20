@@ -33,7 +33,7 @@ def get_creator_items(request):
     return context
 
 def index(request):
-	#if submit, save new item
+	#if new item submitted, save new item
 	if request.method =="POST" and request.POST.get('action') == 'new':
 		item = request.POST['item']
 		qty = request.POST['qty']
@@ -57,6 +57,7 @@ def update_items(request):
 #editing items
 def modify_item(request):
 	if request.is_ajax() and request.POST.get('action') == 'save':
+		print request.POST
 		itemid = request.POST.get('id')
 		newText = request.POST.get('newText')
 		quantity = request.POST.get('quantity')
@@ -67,6 +68,11 @@ def modify_item(request):
 	if request.is_ajax() and request.POST.get('action') == 'destroy':
 		itemid = request.POST.get('id')
 		Produce.objects.filter(id=itemid).delete()
+	if request.is_ajax() and request.POST.get('action') == 'buy':
+		itemid = request.POST.get('id')
+		seller = request.POST.get('creator')
+		buyer = request.user
+		print 'creator:', seller
 	context = get_creator_items(request)
 	return render(request, 'index.html', context)
 

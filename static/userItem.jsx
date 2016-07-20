@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom'
 import classNames from 'classnames'
 
 
-var ESCAPE_KEY = 27
-var ENTER_KEY = 13
+const ESCAPE_KEY = 27
+const ENTER_KEY = 13
 
 var UserItem = React.createClass({
 	getInitialState: function () {

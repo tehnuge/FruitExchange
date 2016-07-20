@@ -18,7 +18,7 @@ var UserInventory = React.createClass({
 		$.post(postUrl, itemToSave, function(){
 			//dont need this lodash crap
 			//_.find(inventory, {'id': itemToSave.id}).name = text
-			console.log("sucess!")
+			console.log("save success!")
 		})
 		this.setState({editing: null})
 	},
@@ -32,10 +32,6 @@ var UserInventory = React.createClass({
 		});
 	},
 	render: function(){	
-		// $.get('/profile/update_items/', function(data){
-		// 	inventory = data
-		// 	console.log('userInveory.jsx success!!', data)
-		// });
 		return(
 			<div>
 				<h3>Inventory:</h3>

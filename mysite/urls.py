@@ -24,6 +24,7 @@ urlpatterns = [
 	url(r'^login/?$', views.login, name="login"),
     url(r'^signup/$', views.signup, name='signup'),
 	url(r'^$', views.main, name='main'),
+    url(r'^main/$', views.main, name='main'),
     url(r'^admin/', admin.site.urls),
     url(r'^profile/', include('profile.urls'))
 ]

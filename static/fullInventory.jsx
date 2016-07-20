@@ -2,7 +2,7 @@ import React from 'react'
 import Router from 'react-router'
 import FullItem from './fullItem'
 import Buy from './buy'
-var postUrl = '/profile/modify_item/'
+const postUrl = '/profile/modify_item/'
 
 var FullInventory = React.createClass({
 	getInitialState: function(){
@@ -13,16 +13,14 @@ var FullInventory = React.createClass({
 			newItem: ''
 		}
 	},
-	save: function (itemToSave, text) {
-		//append new text to the itemToSave object and save it
-		itemToSave["newText"] = text;
-		itemToSave['action'] = 'save';
-		$.post(postUrl, itemToSave, function(){
-			//dont need this lodash crap
-			//_.find(inventory, {'id': itemToSave.id}).name = text
-			console.log("save sucess!")
+	//save a 'buy' transaction
+	save: function (trans, text) {
+		//append new text to the trans object and save it
+		console.log('text:', text);
+		trans['action'] = 'buy';
+		$.post(postUrl, trans, function(){
+			console.log("buy success!")
 		})
-		this.setState({editing: null})
 	},
 	edit: function (item) {
 		this.setState({editing: item.id})
@@ -45,12 +43,12 @@ var FullInventory = React.createClass({
 							street = {item.street}
 							state = {item.state}
 							onBuy={this.buy.bind(this, item)}
-							onSave={this.save.bind(this, item)}
 							editing={this.state.editing === item.id}
 						/>
 						<Buy
 							name={item.name}
 							buying={this.state.buying === item.id}
+							onSave={this.save.bind(this, item)}
 						/>					
 					</div>
 					)

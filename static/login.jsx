@@ -7,15 +7,15 @@ var Login = React.createClass({
 			<div>
 				<form method="post" action="/login">
 				<input type="hidden" name="csrfmiddlewaretoken" value={cookie} />
-				<label for="username"><h3>Account Name</h3></label>
+				<b>Account Name </b>
 				<input id="username" name="username" type="text"
 				       placeholder="Your account name"
-				       autocomplete="off" />
+				       autoComplete="off" />
 				<br />
-		       <label for="password"><h3>Password</h3></label>
+		       <b>Password </b>
 		       <input id="password" name="password" type="password"
 		              placeholder="Your password"
-		              autocomplete="off" />
+		              autoComplete="off" />
 		              <input type="submit" class="button" value="Log In" />
 		        <br />
 		        <Link to="/signup/">No Account? Sign Up</Link>

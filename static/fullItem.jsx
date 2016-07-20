@@ -14,8 +14,6 @@ var FullItem = React.createClass({
 	},
 	handleBuy: function () {
 		this.props.onBuy();
-		//setting this setState will cause the text to revert to the previous state before refresh... need to think on this
-		//this.setState({editText: this.props.name});
 	},
 	handleChange: function (event) {
 		if (this.props.editing) {

@@ -26779,7 +26779,7 @@
 			$.post(postUrl, itemToSave, function () {
 				//dont need this lodash crap
 				//_.find(inventory, {'id': itemToSave.id}).name = text
-				console.log("sucess!");
+				console.log("save success!");
 			});
 			this.setState({ editing: null });
 		},
@@ -26793,10 +26793,6 @@
 			});
 		},
 		render: function render() {
-			// $.get('/profile/update_items/', function(data){
-			// 	inventory = data
-			// 	console.log('userInveory.jsx success!!', data)
-			// });
 			return _react2.default.createElement(
 				'div',
 				null,
@@ -26992,34 +26988,37 @@
 
 	"use strict";
 	
-	var React = __webpack_require__(1);
+	var _react = __webpack_require__(1);
 	
-	var Submission = React.createClass({
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Submission = _react2.default.createClass({
 		displayName: "Submission",
 	
 		render: function render() {
-			var createFruit = function createFruit(fruit) {};
-			return React.createElement(
+			return _react2.default.createElement(
 				"div",
 				null,
-				React.createElement(
+				_react2.default.createElement(
 					"form",
 					{ method: "post", action: "/profile/" },
-					React.createElement("input", { type: "hidden", name: "csrfmiddlewaretoken", value: cookie }),
-					React.createElement(
+					_react2.default.createElement("input", { type: "hidden", name: "csrfmiddlewaretoken", value: cookie }),
+					_react2.default.createElement(
 						"label",
 						null,
 						"Item: "
 					),
-					React.createElement("input", { id: "item", name: "item", type: "text" }),
-					React.createElement(
+					_react2.default.createElement("input", { id: "item", name: "item", type: "text" }),
+					_react2.default.createElement(
 						"label",
 						null,
 						"Qty: "
 					),
-					React.createElement("input", { id: "qty", name: "qty" }),
-					React.createElement("input", { type: "hidden", name: "action", value: "new" }),
-					React.createElement("input", { type: "submit", className: "button", value: "Submit" })
+					_react2.default.createElement("input", { id: "qty", name: "qty" }),
+					_react2.default.createElement("input", { type: "hidden", name: "action", value: "new" }),
+					_react2.default.createElement("input", { type: "submit", className: "button", value: "Submit" })
 				)
 			);
 		}
@@ -27098,16 +27097,14 @@
 				newItem: ''
 			};
 		},
-		save: function save(itemToSave, text) {
-			//append new text to the itemToSave object and save it
-			itemToSave["newText"] = text;
-			itemToSave['action'] = 'save';
-			$.post(postUrl, itemToSave, function () {
-				//dont need this lodash crap
-				//_.find(inventory, {'id': itemToSave.id}).name = text
-				console.log("save sucess!");
+		//save a 'buy' transaction
+		save: function save(trans, text) {
+			//append new text to the trans object and save it
+			console.log('text:', text);
+			trans['action'] = 'buy';
+			$.post(postUrl, trans, function () {
+				console.log("buy success!");
 			});
-			this.setState({ editing: null });
 		},
 		edit: function edit(item) {
 			this.setState({ editing: item.id });
@@ -27136,12 +27133,12 @@
 							street: item.street,
 							state: item.state,
 							onBuy: this.buy.bind(this, item),
-							onSave: this.save.bind(this, item),
 							editing: this.state.editing === item.id
 						}),
 						_react2.default.createElement(_buy2.default, {
 							name: item.name,
-							buying: this.state.buying === item.id
+							buying: this.state.buying === item.id,
+							onSave: this.save.bind(this, item)
 						})
 					);
 				}, this)
@@ -27186,8 +27183,6 @@
 		},
 		handleBuy: function handleBuy() {
 			this.props.onBuy();
-			//setting this setState will cause the text to revert to the previous state before refresh... need to think on this
-			//this.setState({editText: this.props.name});
 		},
 		handleChange: function handleChange(event) {
 			if (this.props.editing) {
@@ -27279,30 +27274,22 @@
 					{ method: 'post', action: '/login' },
 					React.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie }),
 					React.createElement(
-						'label',
-						{ 'for': 'username' },
-						React.createElement(
-							'h3',
-							null,
-							'Account Name'
-						)
+						'b',
+						null,
+						'Account Name '
 					),
 					React.createElement('input', { id: 'username', name: 'username', type: 'text',
 						placeholder: 'Your account name',
-						autocomplete: 'off' }),
+						autoComplete: 'off' }),
 					React.createElement('br', null),
 					React.createElement(
-						'label',
-						{ 'for': 'password' },
-						React.createElement(
-							'h3',
-							null,
-							'Password'
-						)
+						'b',
+						null,
+						'Password '
 					),
 					React.createElement('input', { id: 'password', name: 'password', type: 'password',
 						placeholder: 'Your password',
-						autocomplete: 'off' }),
+						autoComplete: 'off' }),
 					React.createElement('input', { type: 'submit', 'class': 'button', value: 'Log In' }),
 					React.createElement('br', null),
 					React.createElement(
@@ -43866,9 +43853,10 @@
 				),
 				_react2.default.createElement(
 					'form',
-					{ method: 'post', action: '/profile/modify_item' },
+					{ method: 'post' },
+					_react2.default.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie }),
 					_react2.default.createElement('input', { placeholder: 'amount', name: 'amount' }),
-					_react2.default.createElement('input', { type: 'submit', value: 'Submit' })
+					_react2.default.createElement('input', { type: 'submit', value: 'Submit', onClick: this.props.onSave })
 				)
 			);
 		}
@@ -43890,6 +43878,8 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRouter = __webpack_require__(170);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = _react2.default.createClass({
@@ -43898,7 +43888,17 @@
 			return _react2.default.createElement(
 				'div',
 				null,
-				'Home'
+				_react2.default.createElement(
+					'b',
+					null,
+					'The Fruit Exchange is a marketplace for homegrown fruits and produce from your backyard.'
+				),
+				_react2.default.createElement('br', null),
+				_react2.default.createElement(
+					_reactRouter.Link,
+					{ to: '/signup/' },
+					'No Account? Sign Up'
+				)
 			);
 		}
 	});
