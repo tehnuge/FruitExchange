@@ -15,9 +15,9 @@ class Produce(models.Model):
 		
 class Location(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-	street = models.CharField(max_length=100)
-	city = models.CharField(max_length=100)
-	state = models.CharField(max_length = 100)
+	street = models.CharField(max_length=100, default="")
+	city = models.CharField(max_length=100, default="")
+	state = models.CharField(max_length = 100, default="")
 
 class Transaction(models.Model):
 	buyer = models.ForeignKey(settings.AUTH_USER_MODEL, null=False, related_name='buyer')

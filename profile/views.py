@@ -3,34 +3,7 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Produce, Transaction
 from django.template import RequestContext
 from django.shortcuts import render, get_object_or_404, render_to_response, redirect
-
-def get_creator_items(request):
-    #show user's inventory: iterate over Produce and append to inventory array
-    inventory = []
-    for prod in Produce.objects.filter(creator=request.user.id):
-        single = {}
-        single["id"] = prod.id
-        single["name"] = prod.produce_text
-        single["amount"] = prod.quantity
-        inventory.append(single)
-
-    marketItems = []
-    #iterate over Produce and append to inventory array
-    for prod in Produce.objects.all():
-        single = {}
-        single["id"] = prod.id
-        single["name"] = prod.produce_text
-        single["amount"] = prod.quantity
-        single["street"] = prod.creator.location.street
-        single["city"] = prod.creator.location.city
-        single["state"] = prod.creator.location.state
-        single["creator"] = prod.creator.get_username()
-        marketItems.append(single)
-    context = {
-        'inventory': json.dumps(inventory),
-        'marketItems': json.dumps(marketItems)
-    }
-    return context
+from mysite.views import get_creator_items
 
 def index(request):
 	#if new item submitted, save new item

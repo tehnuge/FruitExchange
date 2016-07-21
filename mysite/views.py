@@ -29,9 +29,13 @@ def get_creator_items(request):
         single["id"] = prod.id
         single["name"] = prod.produce_text
         single["amount"] = prod.quantity
-        single["street"] = prod.creator.location.street
-        single["city"] = prod.creator.location.city
-        single["state"] = prod.creator.location.state
+        #print prod.creator.location
+        try:
+            single["street"] = prod.creator.location.street
+            single["city"] = prod.creator.location.city
+            single["state"] = prod.creator.location.state
+        except Location.DoesNotExist:
+            pass
         single["creator"] = prod.creator.get_username()
         marketItems.append(single)
     context = {
