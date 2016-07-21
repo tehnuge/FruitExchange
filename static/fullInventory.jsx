@@ -31,7 +31,6 @@ var FullInventory = React.createClass({
 	render: function(){		
 		return(
 			<div>
-				<h3>Inventory:</h3>
 			{marketItems.map(function(item){
 				var address = "/profile/"+item.name
 				return(

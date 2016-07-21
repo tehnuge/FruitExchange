@@ -26772,13 +26772,12 @@
 				newItem: ''
 			};
 		},
-		save: function save(itemToSave, text) {
+		save: function save(itemToSave, name, amount) {
 			//append new text to the itemToSave object and save it
-			itemToSave["newText"] = text;
+			itemToSave["newAmount"] = amount;
+			itemToSave["newText"] = name;
 			itemToSave['action'] = 'save';
 			$.post(postUrl, itemToSave, function () {
-				//dont need this lodash crap
-				//_.find(inventory, {'id': itemToSave.id}).name = text
 				console.log("save success!");
 			});
 			this.setState({ editing: null });
@@ -26851,29 +26850,37 @@
 		displayName: 'UserItem',
 	
 		getInitialState: function getInitialState() {
-			return { editText: this.props.name };
+			return { editName: this.props.name,
+				editAmount: this.props.amount };
 		},
 		handleEdit: function handleEdit() {
 			this.props.onEdit();
 		},
 		handleChange: function handleChange(event) {
 			if (this.props.editing) {
-				this.setState({ editText: event.target.value });
+				if (event.target.id === 'editNameField') {
+					this.setState({ editName: event.target.value });
+				}
+				if (event.target.id === 'editAmountField') {
+					this.setState({ editAmount: event.target.value });
+				}
 			}
 		},
 		handleKeyDown: function handleKeyDown(event) {
 			if (event.which === ESCAPE_KEY) {
-				this.setState({ editText: this.props.todo.title });
+				this.setState({ editName: this.props.todo.title });
 				this.props.onCancel(event);
 			} else if (event.which === ENTER_KEY) {
 				this.handleSubmit(event);
 			}
 		},
 		handleSubmit: function handleSubmit(event) {
-			var val = this.state.editText.trim();
-			if (val) {
-				this.props.onSave(val);
-				this.setState({ editText: val });
+			var name = this.state.editName.trim();
+			var amount = this.state.editAmount;
+			if (name || amount) {
+				this.props.onSave(name, amount);
+				this.setState({ editName: name,
+					editAmount: amount });
 			} else {
 				//this.props.onDestroy()
 			}
@@ -26895,28 +26902,38 @@
 					'div',
 					{ className: 'view' },
 					_react2.default.createElement(
-						'label',
-						{ onDoubleClick: this.handleEdit },
+						'b',
+						null,
 						'item: ',
-						this.state.editText
+						this.state.editName
 					),
 					_react2.default.createElement(
 						'p',
 						null,
 						'amount: ',
-						this.props.amount
+						this.state.editAmount
 					),
+					_react2.default.createElement('input', { type: 'button', value: 'edit', onClick: this.handleEdit }),
 					_react2.default.createElement(
 						'form',
 						{ method: 'post', action: '/profile/' },
 						_react2.default.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie }),
-						_react2.default.createElement('button', { className: 'destroy', onClick: this.props.onDestroy })
+						_react2.default.createElement('input', { type: 'button', value: 'delete', onClick: this.props.onDestroy })
 					)
 				),
 				_react2.default.createElement('input', {
-					ref: 'editField',
+					id: 'editNameField',
 					className: 'edit',
-					value: this.state.editText,
+					value: this.state.editName,
+					onChange: this.handleChange,
+					onBlur: this.handleSubmit,
+					onKeyDown: this.handleKeyDown
+	
+				}),
+				_react2.default.createElement('input', {
+					id: 'editAmountField',
+					className: 'edit',
+					value: this.state.editAmount,
 					onChange: this.handleChange,
 					onBlur: this.handleSubmit,
 					onKeyDown: this.handleKeyDown
@@ -27116,11 +27133,6 @@
 			return _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement(
-					'h3',
-					null,
-					'Inventory:'
-				),
 				marketItems.map(function (item) {
 					var address = "/profile/" + item.name;
 					return _react2.default.createElement(
@@ -27471,6 +27483,11 @@
 			return _react2.default.createElement(
 				'div',
 				null,
+				_react2.default.createElement(
+					'h2',
+					null,
+					'Don\'t let your fruit and produce go to waste.'
+				),
 				_react2.default.createElement(
 					'b',
 					null,

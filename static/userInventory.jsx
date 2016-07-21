@@ -11,13 +11,12 @@ var UserInventory = React.createClass({
 			newItem: ''
 		}
 	},
-	save: function (itemToSave, text) {
+	save: function (itemToSave, name, amount) {
 		//append new text to the itemToSave object and save it
-		itemToSave["newText"] = text;
+		itemToSave["newAmount"] = amount;
+		itemToSave["newText"] = name;
 		itemToSave['action'] = 'save';
 		$.post(postUrl, itemToSave, function(){
-			//dont need this lodash crap
-			//_.find(inventory, {'id': itemToSave.id}).name = text
 			console.log("save success!")
 		})
 		this.setState({editing: null})

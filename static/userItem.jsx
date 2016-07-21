@@ -9,29 +9,37 @@ const ENTER_KEY = 13
 
 var UserItem = React.createClass({
 	getInitialState: function () {
-		return {editText: this.props.name};
+		return {editName: this.props.name,
+				editAmount: this.props.amount};
 	},
 	handleEdit: function () {
 		this.props.onEdit();
 	},
 	handleChange: function (event) {
 		if (this.props.editing) {
-			this.setState({editText: event.target.value});
+			if(event.target.id === 'editNameField'){
+				this.setState({editName: event.target.value});
+			}
+			if(event.target.id === 'editAmountField'){
+				this.setState({editAmount: event.target.value});
+			}
 		}
 	},
 	handleKeyDown: function (event) {
 		if (event.which === ESCAPE_KEY) {
-			this.setState({editText: this.props.todo.title});
+			this.setState({editName: this.props.todo.title});
 			this.props.onCancel(event);
 		} else if (event.which === ENTER_KEY) {
 			this.handleSubmit(event);
 		}
 	},
 	handleSubmit: function(event){
-		var val = this.state.editText.trim()
-		if(val){
-			this.props.onSave(val)
-			this.setState({editText: val})
+		var name = this.state.editName.trim()
+		var amount = this.state.editAmount
+		if(name || amount){
+			this.props.onSave(name, amount)
+			this.setState({editName: name,
+							editAmount: amount})
 		}
 		else{
 			//this.props.onDestroy()
@@ -50,18 +58,27 @@ var UserItem = React.createClass({
 				editing: this.props.editing
 			})}>
 				<div className="view"> 
-					<label onDoubleClick={this.handleEdit}> 
-					item: {this.state.editText}</label> 
-					<p>amount: {this.props.amount}</p>
+					<b>item: {this.state.editName}</b> 
+					<p>amount: {this.state.editAmount}</p>
+					<input type="button" value="edit" onClick={this.handleEdit} />
 					<form method="post" action="/profile/">
 						<input type="hidden" name="csrfmiddlewaretoken" value={cookie} />
-							<button className="destroy" onClick={this.props.onDestroy} />
+							<input type="button" value="delete" onClick={this.props.onDestroy} />
 					</form>
 				</div>
 				<input
-					ref="editField"
+					id="editNameField"
 					className="edit"
-					value={this.state.editText}
+					value={this.state.editName}
+					onChange={this.handleChange}
+					onBlur={this.handleSubmit}
+					onKeyDown={this.handleKeyDown}
+
+				/>
+				<input
+					id="editAmountField"
+					className="edit"
+					value={this.state.editAmount}
 					onChange={this.handleChange}
 					onBlur={this.handleSubmit}
 					onKeyDown={this.handleKeyDown}
