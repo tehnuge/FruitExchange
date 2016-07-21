@@ -54,7 +54,7 @@ var UserItem = React.createClass({
 	},
 	render: function(){
 		return(
-			<li className={classNames({
+			<div className={classNames({
 				editing: this.props.editing
 			})}>
 				<div className="view"> 
@@ -84,7 +84,7 @@ var UserItem = React.createClass({
 					onKeyDown={this.handleKeyDown}
 
 				/>
-			</li>
+			</div>
 			)
 	}
 })

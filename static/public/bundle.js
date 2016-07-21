@@ -26634,10 +26634,10 @@
 				),
 				React.createElement(
 					'ul',
-					{ role: 'nav' },
+					{ role: 'nav', className: 'row' },
 					React.createElement(
 						'li',
-						null,
+						{ className: 'col-md-3' },
 						React.createElement(
 							Navlink,
 							{ to: '/', onlyActiveOnIndex: true },
@@ -26646,7 +26646,7 @@
 					),
 					React.createElement(
 						'li',
-						null,
+						{ className: 'col-md-3' },
 						React.createElement(
 							Navlink,
 							{ to: '/main' },
@@ -26655,7 +26655,7 @@
 					),
 					React.createElement(
 						'li',
-						null,
+						{ className: 'col-md-3' },
 						React.createElement(
 							Navlink,
 							{ to: '/profile' },
@@ -26664,7 +26664,7 @@
 					),
 					React.createElement(
 						'li',
-						null,
+						{ className: 'col-md-3' },
 						React.createElement(
 							Navlink,
 							{ to: '/login' },
@@ -26894,7 +26894,7 @@
 		},
 		render: function render() {
 			return _react2.default.createElement(
-				'li',
+				'div',
 				{ className: (0, _classnames2.default)({
 						editing: this.props.editing
 					}) },
