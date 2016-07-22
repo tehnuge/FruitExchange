@@ -4,15 +4,18 @@ import Navbar from './navbar'
 import Profile from './profile'
 import Main from './main'
 import Login from './login'
+import Logout from './logout'
 import UserItem from './userItem'
 import SignUp from './signup'
 import Buy from './buy'
 import Home from './home'
 
+
 module.exports = (
 <div>
   <Route path="/" component={Navbar}>
   	<IndexRoute component={Home} />
+  	<Route path="/logout" component={Logout} />
   	<Route path="/main" component={Main}>
   		<Route path="/main/:itemName" component={Buy} />
   	</Route>

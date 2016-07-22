@@ -26571,6 +26571,10 @@
 	
 	var _login2 = _interopRequireDefault(_login);
 	
+	var _logout = __webpack_require__(250);
+	
+	var _logout2 = _interopRequireDefault(_logout);
+	
 	var _userItem = __webpack_require__(237);
 	
 	var _userItem2 = _interopRequireDefault(_userItem);
@@ -26590,25 +26594,26 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	module.exports = _react2.default.createElement(
-			'div',
-			null,
-			_react2.default.createElement(
-					_reactRouter.Route,
-					{ path: '/', component: _navbar2.default },
-					_react2.default.createElement(_reactRouter.IndexRoute, { component: _home2.default }),
-					_react2.default.createElement(
-							_reactRouter.Route,
-							{ path: '/main', component: _main2.default },
-							_react2.default.createElement(_reactRouter.Route, { path: '/main/:itemName', component: _buy2.default })
-					),
-					_react2.default.createElement(
-							_reactRouter.Route,
-							{ path: '/profile', component: _profile2.default },
-							_react2.default.createElement(_reactRouter.Route, { path: '/profile/:itemName', component: _userItem2.default })
-					),
-					_react2.default.createElement(_reactRouter.Route, { path: '/login', component: _login2.default }),
-					_react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _signup2.default })
-			)
+	  'div',
+	  null,
+	  _react2.default.createElement(
+	    _reactRouter.Route,
+	    { path: '/', component: _navbar2.default },
+	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _home2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/logout', component: _logout2.default }),
+	    _react2.default.createElement(
+	      _reactRouter.Route,
+	      { path: '/main', component: _main2.default },
+	      _react2.default.createElement(_reactRouter.Route, { path: '/main/:itemName', component: _buy2.default })
+	    ),
+	    _react2.default.createElement(
+	      _reactRouter.Route,
+	      { path: '/profile', component: _profile2.default },
+	      _react2.default.createElement(_reactRouter.Route, { path: '/profile/:itemName', component: _userItem2.default })
+	    ),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/login', component: _login2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/signup', component: _signup2.default })
+	  )
 	);
 
 /***/ },
@@ -26617,12 +26622,20 @@
 
 	'use strict';
 	
+	var _reactRouter = __webpack_require__(170);
+	
 	var React = __webpack_require__(1);
 	var Navlink = __webpack_require__(234);
+	
 	
 	var Navbar = React.createClass({
 		displayName: 'Navbar',
 	
+		handleLogout: function handleLogout() {
+			$.post('/logout', function () {
+				console.log('logged out?');
+			});
+		},
 		render: function render() {
 			return React.createElement(
 				'div',
@@ -26640,7 +26653,12 @@
 						{ className: 'text-right col-md-offset-6 col-md-6' },
 						'Hello ',
 						username,
-						' '
+						React.createElement('br', null),
+						React.createElement(
+							_reactRouter.Link,
+							{ to: '/logout/', onClick: this.handleLogout },
+							'Logout '
+						)
 					)
 				),
 				React.createElement(
@@ -44028,6 +44046,32 @@
 	});
 	
 	module.exports = Transactions;
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Logout = _react2.default.createClass({
+		displayName: 'Logout',
+	
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				'You\'ve logged out.'
+			);
+		}
+	});
+	
+	module.exports = Logout;
 
 /***/ }
 /******/ ]);

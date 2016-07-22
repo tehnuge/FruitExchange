@@ -4,6 +4,7 @@ from profile.models import Produce, Location, Transaction
 from django.template import RequestContext
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login, authenticate, REDIRECT_FIELD_NAME
+from django.contrib.auth import logout
 from django.conf import settings
 from django.utils.http import is_safe_url
 from django.contrib.auth.models import User
@@ -15,12 +16,31 @@ from django.shortcuts import render, get_object_or_404, render_to_response,resol
 def get_creator_items(request):
     #show user's inventory: iterate over Produce and append to inventory array
     inventory = []
-    for prod in Produce.objects.filter(creator=request.user):
-        single = {}
-        single["id"] = prod.id
-        single["name"] = prod.produce_text
-        single["amount"] = prod.quantity
-        inventory.append(single)
+    buying = []
+    selling = []
+    if request.user.id is not None:
+        for prod in Produce.objects.filter(creator=request.user):
+            single = {}
+            single["id"] = prod.id
+            single["name"] = prod.produce_text
+            single["amount"] = prod.quantity
+            inventory.append(single)
+        #get items that you are buying
+        for trans in Transaction.objects.filter(buyer=request.user):
+            single = {}
+            single["id"] = trans.id
+            single["item"] = trans.item
+            single["seller"] = trans.seller.username
+            single["amount"] = trans.amount
+            buying.append(single)
+        #get items that user is selling
+        for trans in Transaction.objects.filter(seller=request.user):
+            single = {}
+            single["id"] = trans.id
+            single["item"] = trans.item
+            single["buyer"] = trans.buyer.username
+            single["amount"] = trans.amount
+            selling.append(single)
 
     marketItems = []
     #iterate over Produce and append to inventory array
@@ -38,24 +58,7 @@ def get_creator_items(request):
             pass
         single["creator"] = prod.creator.get_username()
         marketItems.append(single)
-    #get items that you are buying
-    buying = []
-    for trans in Transaction.objects.filter(buyer=request.user):
-        single = {}
-        single["id"] = trans.id
-        single["item"] = trans.item
-        single["seller"] = trans.seller.username
-        single["amount"] = trans.amount
-        buying.append(single)
-    #get items that user is selling
-    selling = []
-    for trans in Transaction.objects.filter(seller=request.user):
-        single = {}
-        single["id"] = trans.id
-        single["item"] = trans.item
-        single["buyer"] = trans.buyer.username
-        single["amount"] = trans.amount
-        selling.append(single)
+
     context = {
         'selling': json.dumps(selling),
         'buying': json.dumps(buying),
@@ -80,6 +83,10 @@ def signup(request):
             user = User.objects.create_user(username= username, password=password)
             print "User created"
     return render(request, 'index.html', RequestContext(request, context))
+
+def logout(request):
+    logout(request)
+    return redirect('/')
 
 def login(request, template_name='index.html',
           redirect_field_name='REDIRECT_FIELD_NAME',
