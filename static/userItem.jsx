@@ -63,7 +63,7 @@ var UserItem = React.createClass({
 					<input type="button" value="edit" onClick={this.handleEdit} />
 					<form method="post" action="/profile/">
 						<input type="hidden" name="csrfmiddlewaretoken" value={cookie} />
-						<input type="button" value="delete" onClick={this.props.onDestroy} />
+						<input value="delete" type="submit" onClick={this.props.onDestroy} />
 					</form>
 				</div>
 				<input
