@@ -4,3 +4,4 @@ static/todo/
 node_modules/
 /static/bundle.js
 /static/bundle.js.map
+*.pyc
