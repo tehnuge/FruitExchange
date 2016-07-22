@@ -15,7 +15,7 @@ module.exports = (
 <div>
   <Route path="/" component={Navbar}>
   	<IndexRoute component={Home} />
-  	<Route path="/logout" component={Logout} />
+  	<Route path="/logged_out" component={Logout} />
   	<Route path="/main" component={Main}>
   		<Route path="/main/:itemName" component={Buy} />
   	</Route>

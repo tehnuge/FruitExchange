@@ -26600,7 +26600,7 @@
 	    _reactRouter.Route,
 	    { path: '/', component: _navbar2.default },
 	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _home2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: '/logout', component: _logout2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/logged_out', component: _logout2.default }),
 	    _react2.default.createElement(
 	      _reactRouter.Route,
 	      { path: '/main', component: _main2.default },
@@ -26632,7 +26632,7 @@
 		displayName: 'Navbar',
 	
 		handleLogout: function handleLogout() {
-			$.post('/logout', function () {
+			$.get('/logout', function () {
 				console.log('logged out?');
 			});
 		},
@@ -26655,8 +26655,8 @@
 						username,
 						React.createElement('br', null),
 						React.createElement(
-							_reactRouter.Link,
-							{ to: '/logout/', onClick: this.handleLogout },
+							'a',
+							{ href: '/logout/', onClick: this.handleLogout },
 							'Logout '
 						)
 					)
@@ -26971,7 +26971,7 @@
 						'form',
 						{ method: 'post', action: '/profile/' },
 						_react2.default.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie }),
-						_react2.default.createElement('input', { type: 'button', value: 'delete', onClick: this.props.onDestroy })
+						_react2.default.createElement('input', { value: 'delete', type: 'submit', onClick: this.props.onDestroy })
 					)
 				),
 				_react2.default.createElement('input', {
@@ -27544,7 +27544,7 @@
 				_react2.default.createElement(
 					'h2',
 					null,
-					'Don\'t let your fruit and produce go to waste.'
+					'Don\'t let the fruit on your tree go to waste.'
 				),
 				_react2.default.createElement(
 					'b',

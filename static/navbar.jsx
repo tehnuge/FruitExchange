@@ -4,7 +4,7 @@ import { Link } from 'react-router'
 
 var Navbar = React.createClass({
 	handleLogout: function(){
-		$.post('/logout', function(){
+		$.get('/logout', function(){
 			console.log('logged out?')
 		})
 	},
@@ -16,7 +16,7 @@ var Navbar = React.createClass({
 						<p className="text-right col-md-offset-6 col-md-6">
 							Hello {username}
 							<br />
-							<Link to='/logout/' onClick={this.handleLogout}>Logout </Link>
+							<a href='/logout/' onClick={this.handleLogout}>Logout </a>
 						</p>
 
 					</div>

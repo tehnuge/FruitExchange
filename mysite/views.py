@@ -8,65 +8,11 @@ from django.contrib.auth import logout
 from django.conf import settings
 from django.utils.http import is_safe_url
 from django.contrib.auth.models import User
+from django.shortcuts import redirect
+
 
 
 from django.shortcuts import render, get_object_or_404, render_to_response,resolve_url
-
-#helper function to send item data
-def get_creator_items(request):
-    #show user's inventory: iterate over Produce and append to inventory array
-    inventory = []
-    buying = []
-    selling = []
-    if request.user.id is not None:
-        for prod in Produce.objects.filter(creator=request.user):
-            single = {}
-            single["id"] = prod.id
-            single["name"] = prod.produce_text
-            single["amount"] = prod.quantity
-            inventory.append(single)
-        #get items that you are buying
-        for trans in Transaction.objects.filter(buyer=request.user):
-            single = {}
-            single["id"] = trans.id
-            single["item"] = trans.item
-            single["seller"] = trans.seller.username
-            single["amount"] = trans.amount
-            buying.append(single)
-        #get items that user is selling
-        for trans in Transaction.objects.filter(seller=request.user):
-            single = {}
-            single["id"] = trans.id
-            single["item"] = trans.item
-            single["buyer"] = trans.buyer.username
-            single["amount"] = trans.amount
-            selling.append(single)
-
-    marketItems = []
-    #iterate over Produce and append to inventory array
-    for prod in Produce.objects.all():
-        single = {}
-        single["id"] = prod.id
-        single["name"] = prod.produce_text
-        single["amount"] = prod.quantity
-        #print prod.creator.location
-        try:
-            single["street"] = prod.creator.location.street
-            single["city"] = prod.creator.location.city
-            single["state"] = prod.creator.location.state
-        except Location.DoesNotExist:
-            pass
-        single["creator"] = prod.creator.get_username()
-        marketItems.append(single)
-
-    context = {
-        'selling': json.dumps(selling),
-        'buying': json.dumps(buying),
-        'username': json.dumps(request.user.username),
-        'inventory': json.dumps(inventory),
-        'marketItems': json.dumps(marketItems)
-    }
-    return context
 
 def main(request):
     context = get_creator_items(request)
@@ -84,9 +30,14 @@ def signup(request):
             print "User created"
     return render(request, 'index.html', RequestContext(request, context))
 
-def logout(request):
+def logout_view(request):
     logout(request)
-    return redirect('/')
+    return HttpResponseRedirect('/logged_out')
+
+def logged_out(request):
+    context = get_creator_items(request)
+    return render(request, 'index.html', context)
+     
 
 def login(request, template_name='index.html',
           redirect_field_name='REDIRECT_FIELD_NAME',
@@ -150,3 +101,59 @@ def login(request, template_name='index.html',
     context = get_creator_items(request)
 
     return render(request, template_name, context)
+
+#helper function to send item data
+def get_creator_items(request):
+    #show user's inventory: iterate over Produce and append to inventory array
+    inventory = []
+    buying = []
+    selling = []
+    if request.user.id is not None:
+        for prod in Produce.objects.filter(creator=request.user):
+            single = {}
+            single["id"] = prod.id
+            single["name"] = prod.produce_text
+            single["amount"] = prod.quantity
+            inventory.append(single)
+        #get items that you are buying
+        for trans in Transaction.objects.filter(buyer=request.user):
+            single = {}
+            single["id"] = trans.id
+            single["item"] = trans.item
+            single["seller"] = trans.seller.username
+            single["amount"] = trans.amount
+            buying.append(single)
+        #get items that user is selling
+        for trans in Transaction.objects.filter(seller=request.user):
+            single = {}
+            single["id"] = trans.id
+            single["item"] = trans.item
+            single["buyer"] = trans.buyer.username
+            single["amount"] = trans.amount
+            selling.append(single)
+
+    marketItems = []
+    #iterate over Produce and append to inventory array
+    for prod in Produce.objects.all():
+        single = {}
+        single["id"] = prod.id
+        single["name"] = prod.produce_text
+        single["amount"] = prod.quantity
+        #print prod.creator.location
+        try:
+            single["street"] = prod.creator.location.street
+            single["city"] = prod.creator.location.city
+            single["state"] = prod.creator.location.state
+        except Location.DoesNotExist:
+            pass
+        single["creator"] = prod.creator.get_username()
+        marketItems.append(single)
+
+    context = {
+        'selling': json.dumps(selling),
+        'buying': json.dumps(buying),
+        'username': json.dumps(request.user.username),
+        'inventory': json.dumps(inventory),
+        'marketItems': json.dumps(marketItems)
+    }
+    return context

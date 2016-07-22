@@ -23,7 +23,8 @@ from . import views
 
 urlpatterns = [
 	url(r'^login/?$', views.login, name="login"),
-    url(r'^logout/?$', views.logout, name="logout"),
+    url(r'^logout/?$', views.logout_view, name="logout"),
+    url(r'^logged_out/?$', views.logged_out, name="logged_out"),
     url(r'^signup/$', views.signup, name='signup'),
 	url(r'^$', views.main, name='main'),
     url(r'^main/$', views.main, name='main'),
