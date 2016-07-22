@@ -26628,9 +26628,20 @@
 				'div',
 				null,
 				React.createElement(
-					'h1',
-					null,
-					'The Fruit Exchange '
+					'div',
+					{ className: 'row' },
+					React.createElement(
+						'h1',
+						null,
+						'The Fruit Exchange '
+					),
+					React.createElement(
+						'p',
+						{ className: 'text-right col-md-offset-6 col-md-6' },
+						'Hello ',
+						username,
+						' '
+					)
 				),
 				React.createElement(
 					'ul',
@@ -26706,33 +26717,57 @@
 
 	'use strict';
 	
-	var React = __webpack_require__(1);
-	var ReactDOM = __webpack_require__(33);
-	var UserInventory = __webpack_require__(236);
-	var Submission = __webpack_require__(239);
+	var _react = __webpack_require__(1);
 	
-	var Profile = React.createClass({
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(33);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _userInventory = __webpack_require__(236);
+	
+	var _userInventory2 = _interopRequireDefault(_userInventory);
+	
+	var _submission = __webpack_require__(239);
+	
+	var _submission2 = _interopRequireDefault(_submission);
+	
+	var _transactions = __webpack_require__(249);
+	
+	var _transactions2 = _interopRequireDefault(_transactions);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Profile = _react2.default.createClass({
 		displayName: 'Profile',
 	
 	
 		render: function render() {
-			/*		$.get('/profile/update_items/', function(data){
-	  			inventory = data
-	  			console.log('Profile.jsx success!!', data)
-	  		})*/
-			console.log(inventory);
-	
 			//return inventory of items
-			return React.createElement(
+			return _react2.default.createElement(
 				'div',
 				null,
-				React.createElement(
+				_react2.default.createElement(
 					'h1',
 					null,
 					'Your Profile'
 				),
-				React.createElement(UserInventory, null),
-				React.createElement(Submission, null),
+				_react2.default.createElement(
+					'div',
+					{ className: 'row' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'col-md-6' },
+						_react2.default.createElement(_userInventory2.default, null)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'col-md-6' },
+						_react2.default.createElement(_submission2.default, null),
+						_react2.default.createElement(_transactions2.default, null)
+					)
+				),
 				this.props.children
 			);
 		}
@@ -27018,6 +27053,11 @@
 			return _react2.default.createElement(
 				"div",
 				null,
+				_react2.default.createElement(
+					"h3",
+					null,
+					" Submit new Item: "
+				),
 				_react2.default.createElement(
 					"form",
 					{ method: "post", action: "/profile/" },
@@ -43929,6 +43969,65 @@
 		return module;
 	}
 
+
+/***/ },
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Transactions = _react2.default.createClass({
+		displayName: 'Transactions',
+	
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'h3',
+					null,
+					'Transactions'
+				),
+				_react2.default.createElement(
+					'h4',
+					null,
+					'Your requests: '
+				),
+				buying.map(function (trans) {
+					return _react2.default.createElement(
+						'div',
+						{ key: trans.id },
+						'item: ',
+						trans.item,
+						'seller: ',
+						trans.seller,
+						'amount: ',
+						trans.amount
+					);
+				}),
+				selling.map(function (trans) {
+					return _react2.default.createElement(
+						'div',
+						{ key: trans.id },
+						'item: ',
+						trans.item,
+						'buyer: ',
+						trans.buyer,
+						'amount: ',
+						trans.amount
+					);
+				})
+			);
+		}
+	});
+	
+	module.exports = Transactions;
 
 /***/ }
 /******/ ]);

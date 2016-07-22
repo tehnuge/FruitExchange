@@ -25,3 +25,5 @@ class Transaction(models.Model):
 	item = models.CharField(max_length=100)
 	amount = models.IntegerField(default=1)
 	date = models.DateTimeField(default=datetime.now)
+	def __str__(self):
+		return 'buyer: ' + self.buyer.username + ' seller: ' + self.seller.username + ' item: '+ self.item + ' amount: '+str(self.amount)

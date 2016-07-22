@@ -1,23 +1,25 @@
-var React = require('react')
-var ReactDOM = require('react-dom')
-var UserInventory = require('./userInventory')
-var Submission = require('./submission')
+import React from 'react'
+import ReactDOM from 'react-dom'
+import UserInventory from './userInventory'
+import Submission from './submission'
+import Transactions from './transactions'
 
 var Profile = React.createClass({
 
-	render: function(){
-/*		$.get('/profile/update_items/', function(data){
-			inventory = data
-			console.log('Profile.jsx success!!', data)
-		})*/
-		console.log(inventory)
-		
+	render: function(){		
 		//return inventory of items
 		return(
 			<div>
 				<h1>Your Profile</h1>
-				<UserInventory />
-				<Submission />
+				<div className="row">
+					<div className="col-md-6">
+						<UserInventory />
+					</div>
+					<div className="col-md-6">
+						<Submission />
+						<Transactions />
+					</div>
+				</div>
 				{this.props.children}
 			</div>
 			)

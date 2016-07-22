@@ -4,6 +4,7 @@ var Submission = React.createClass({
 	render: function() {
 		return(
 			<div>
+			<h3> Submit new Item: </h3>
 			<form method="post" action="/profile/">
 				<input type="hidden" name="csrfmiddlewaretoken" value={cookie} />
 					<label>Item: </label>

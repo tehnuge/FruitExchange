@@ -1,6 +1,6 @@
 import json
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from profile.models import Produce, Location
+from profile.models import Produce, Location, Transaction
 from django.template import RequestContext
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login as auth_login, authenticate, REDIRECT_FIELD_NAME
@@ -15,7 +15,7 @@ from django.shortcuts import render, get_object_or_404, render_to_response,resol
 def get_creator_items(request):
     #show user's inventory: iterate over Produce and append to inventory array
     inventory = []
-    for prod in Produce.objects.filter(creator=request.user.id):
+    for prod in Produce.objects.filter(creator=request.user):
         single = {}
         single["id"] = prod.id
         single["name"] = prod.produce_text
@@ -38,7 +38,28 @@ def get_creator_items(request):
             pass
         single["creator"] = prod.creator.get_username()
         marketItems.append(single)
+    #get items that you are buying
+    buying = []
+    for trans in Transaction.objects.filter(buyer=request.user):
+        single = {}
+        single["id"] = trans.id
+        single["item"] = trans.item
+        single["seller"] = trans.seller.username
+        single["amount"] = trans.amount
+        buying.append(single)
+    #get items that user is selling
+    selling = []
+    for trans in Transaction.objects.filter(seller=request.user):
+        single = {}
+        single["id"] = trans.id
+        single["item"] = trans.item
+        single["buyer"] = trans.buyer.username
+        single["amount"] = trans.amount
+        selling.append(single)
     context = {
+        'selling': json.dumps(selling),
+        'buying': json.dumps(buying),
+        'username': json.dumps(request.user.username),
         'inventory': json.dumps(inventory),
         'marketItems': json.dumps(marketItems)
     }

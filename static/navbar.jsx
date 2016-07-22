@@ -5,7 +5,10 @@ var Navbar = React.createClass({
 	render: function() {
 		return (
 				<div>
-					<h1>The Fruit Exchange </h1>
+					<div className="row">
+						<h1>The Fruit Exchange </h1>
+						<p className="text-right col-md-offset-6 col-md-6">Hello {username} </p>
+					</div>
 					<ul role='nav' className="row">
 						<li className="col-md-3"><Navlink to='/' onlyActiveOnIndex={true}>Home </Navlink></li>
 						<li className="col-md-3"><Navlink to='/main'>Main</Navlink></li>
