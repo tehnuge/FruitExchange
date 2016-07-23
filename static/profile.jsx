@@ -13,6 +13,7 @@ var Profile = React.createClass({
 				<h1>Your Profile</h1>
 				<div className="row">
 					<div className="col-md-6">
+						<h3>Inventory:</h3>
 						<UserInventory />
 					</div>
 					<div className="col-md-6">

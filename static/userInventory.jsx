@@ -1,6 +1,7 @@
 import React from 'react'
 import Router from 'react-router'
 import UserItem from './userItem'
+import _ from 'lodash'
 var postUrl = '/profile/modify_item/'
 
 var UserInventory = React.createClass({
@@ -31,9 +32,12 @@ var UserInventory = React.createClass({
 		});
 	},
 	render: function(){	
+		if(_.isEmpty(inventory)){
+			return(
+				<b>Your inventory is empty.</b>)
+		}
 		return(
 			<div>
-				<h3>Inventory:</h3>
 			{inventory.map(function(item){
 				var address = "/profile/"+item.name
 				return(
@@ -45,8 +49,7 @@ var UserInventory = React.createClass({
 							onSave={this.save.bind(this, item)}
 							editing={this.state.editing === item.id}
 							onDestroy={this.destroy.bind(this, item)}
-						/>
-						
+						/>	
 					</div>
 					)
 			}, this)}

@@ -26622,13 +26622,19 @@
 
 	'use strict';
 	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _navlink = __webpack_require__(234);
+	
+	var _navlink2 = _interopRequireDefault(_navlink);
+	
 	var _reactRouter = __webpack_require__(170);
 	
-	var React = __webpack_require__(1);
-	var Navlink = __webpack_require__(234);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	
-	var Navbar = React.createClass({
+	var Navbar = _react2.default.createClass({
 		displayName: 'Navbar',
 	
 		handleLogout: function handleLogout() {
@@ -26637,65 +26643,65 @@
 			});
 		},
 		render: function render() {
-			return React.createElement(
+			return _react2.default.createElement(
 				'div',
 				null,
-				React.createElement(
+				_react2.default.createElement(
 					'div',
 					{ className: 'row' },
-					React.createElement(
+					_react2.default.createElement(
 						'h1',
 						null,
 						'The Fruit Exchange '
 					),
-					React.createElement(
+					_react2.default.createElement(
 						'p',
 						{ className: 'text-right col-md-offset-6 col-md-6' },
 						'Hello ',
 						username,
-						React.createElement('br', null),
-						React.createElement(
+						_react2.default.createElement('br', null),
+						_react2.default.createElement(
 							'a',
 							{ href: '/logout/', onClick: this.handleLogout },
 							'Logout '
 						)
 					)
 				),
-				React.createElement(
+				_react2.default.createElement(
 					'ul',
 					{ role: 'nav', className: 'row' },
-					React.createElement(
+					_react2.default.createElement(
 						'li',
 						{ className: 'col-md-3' },
-						React.createElement(
-							Navlink,
+						_react2.default.createElement(
+							_navlink2.default,
 							{ to: '/', onlyActiveOnIndex: true },
 							'Home '
 						)
 					),
-					React.createElement(
+					_react2.default.createElement(
 						'li',
 						{ className: 'col-md-3' },
-						React.createElement(
-							Navlink,
+						_react2.default.createElement(
+							_navlink2.default,
 							{ to: '/main' },
 							'Main'
 						)
 					),
-					React.createElement(
+					_react2.default.createElement(
 						'li',
 						{ className: 'col-md-3' },
-						React.createElement(
-							Navlink,
+						_react2.default.createElement(
+							_navlink2.default,
 							{ to: '/profile' },
 							'Profile'
 						)
 					),
-					React.createElement(
+					_react2.default.createElement(
 						'li',
 						{ className: 'col-md-3' },
-						React.createElement(
-							Navlink,
+						_react2.default.createElement(
+							_navlink2.default,
 							{ to: '/login' },
 							'Login'
 						)
@@ -26777,6 +26783,11 @@
 					_react2.default.createElement(
 						'div',
 						{ className: 'col-md-6' },
+						_react2.default.createElement(
+							'h3',
+							null,
+							'Inventory:'
+						),
 						_react2.default.createElement(_userInventory2.default, null)
 					),
 					_react2.default.createElement(
@@ -26810,6 +26821,10 @@
 	var _userItem = __webpack_require__(237);
 	
 	var _userItem2 = _interopRequireDefault(_userItem);
+	
+	var _lodash = __webpack_require__(247);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -26845,14 +26860,16 @@
 			});
 		},
 		render: function render() {
+			if (_lodash2.default.isEmpty(inventory)) {
+				return _react2.default.createElement(
+					'b',
+					null,
+					'Your inventory is empty.'
+				);
+			}
 			return _react2.default.createElement(
 				'div',
 				null,
-				_react2.default.createElement(
-					'h3',
-					null,
-					'Inventory:'
-				),
 				inventory.map(function (item) {
 					var address = "/profile/" + item.name;
 					return _react2.default.createElement(
@@ -43998,12 +44015,94 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _lodash = __webpack_require__(247);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Transactions = _react2.default.createClass({
 		displayName: 'Transactions',
 	
 		render: function render() {
+			var sellingItems = function sellingItems() {
+				if (_lodash2.default.isEmpty(selling)) {
+					return _react2.default.createElement(
+						'div',
+						null,
+						'You don\'t have any requests yet. '
+					);
+				}
+				return selling.map(function (trans) {
+					return _react2.default.createElement(
+						'div',
+						{ key: trans.id },
+						_react2.default.createElement(
+							'b',
+							null,
+							'item:'
+						),
+						' ',
+						trans.item,
+						' ',
+						_react2.default.createElement(
+							'b',
+							null,
+							'buyer:'
+						),
+						' ',
+						trans.buyer,
+						' ',
+						_react2.default.createElement(
+							'b',
+							null,
+							'amount:'
+						),
+						' ',
+						trans.amount,
+						' '
+					);
+				});
+			};
+			var buyingItems = function buyingItems() {
+				if (_lodash2.default.isEmpty(buying)) {
+					return _react2.default.createElement(
+						'div',
+						null,
+						'You haven\'t made any requests yet. '
+					);
+				}
+				return buying.map(function (trans) {
+					return _react2.default.createElement(
+						'div',
+						{ key: trans.id },
+						_react2.default.createElement(
+							'b',
+							null,
+							'item:'
+						),
+						' ',
+						trans.item,
+						'  ',
+						_react2.default.createElement(
+							'b',
+							null,
+							'seller:'
+						),
+						' ',
+						trans.seller,
+						' ',
+						_react2.default.createElement(
+							'b',
+							null,
+							'amount:'
+						),
+						' ',
+						trans.amount,
+						' '
+					);
+				});
+			};
 			return _react2.default.createElement(
 				'div',
 				null,
@@ -44015,32 +44114,15 @@
 				_react2.default.createElement(
 					'h4',
 					null,
+					'Requests from you: '
+				),
+				sellingItems(),
+				_react2.default.createElement(
+					'h4',
+					null,
 					'Your requests: '
 				),
-				buying.map(function (trans) {
-					return _react2.default.createElement(
-						'div',
-						{ key: trans.id },
-						'item: ',
-						trans.item,
-						'seller: ',
-						trans.seller,
-						'amount: ',
-						trans.amount
-					);
-				}),
-				selling.map(function (trans) {
-					return _react2.default.createElement(
-						'div',
-						{ key: trans.id },
-						'item: ',
-						trans.item,
-						'buyer: ',
-						trans.buyer,
-						'amount: ',
-						trans.amount
-					);
-				})
+				buyingItems()
 			);
 		}
 	});

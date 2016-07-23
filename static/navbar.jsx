@@ -1,5 +1,5 @@
-var React = require('react')
-var Navlink = require('./navlink')
+import React from 'react'
+import Navlink from './navlink'
 import { Link } from 'react-router'
 
 var Navbar = React.createClass({
