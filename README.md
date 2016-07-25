@@ -1,4 +1,4 @@
-#DjangoTut
+#The Fruit Exchange
 A market for exchange of home produced goods
 
 ##To Install
