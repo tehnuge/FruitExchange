@@ -14,9 +14,9 @@ var SignUp = React.createClass({
 				'username': username,
 				'password': password
 			}
-			$.post('/signup/', data, function() {
+/*			$.post('/signup/', data, function() {
 				console.log('signup success')
-			})
+			})*/
 		}
 	},
 	render: function(){

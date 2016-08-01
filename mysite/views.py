@@ -19,7 +19,7 @@ def main(request):
     return render(request, 'index.html', context)
 
 def signup(request):
-    context = {}
+    context = get_creator_items(request)
     if request.method == "POST":       
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -28,7 +28,7 @@ def signup(request):
         else:
             user = User.objects.create_user(username= username, password=password)
             print "User created"
-    return render(request, 'index.html', RequestContext(request, context))
+    return render(request, 'index.html', context)
 
 def logout_view(request):
     logout(request)
