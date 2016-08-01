@@ -9,6 +9,7 @@ var Navbar = React.createClass({
 		})
 	},
 	render: function() {
+		username = username || ""
 		return (
 				<div>
 					<div className="row">
@@ -25,6 +26,8 @@ var Navbar = React.createClass({
 						<li className="col-md-3"><Navlink to='/main'>Main</Navlink></li>
 						<li className="col-md-3"><Navlink to='/profile'>Profile</Navlink></li>
 						<li className="col-md-3"><Navlink to='/login'>Login</Navlink></li>
+						<li className="col-md-3"><Navlink to='/signup'>signup</Navlink></li>
+
 					</ul>
 					{this.props.children}
 				</div>

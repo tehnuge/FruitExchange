@@ -60,7 +60,7 @@
 	
 	var _routes2 = _interopRequireDefault(_routes);
 	
-	var _lodash = __webpack_require__(247);
+	var _lodash = __webpack_require__(239);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
@@ -26563,15 +26563,15 @@
 	
 	var _profile2 = _interopRequireDefault(_profile);
 	
-	var _main = __webpack_require__(240);
+	var _main = __webpack_require__(243);
 	
 	var _main2 = _interopRequireDefault(_main);
 	
-	var _login = __webpack_require__(244);
+	var _login = __webpack_require__(247);
 	
 	var _login2 = _interopRequireDefault(_login);
 	
-	var _logout = __webpack_require__(250);
+	var _logout = __webpack_require__(248);
 	
 	var _logout2 = _interopRequireDefault(_logout);
 	
@@ -26579,15 +26579,15 @@
 	
 	var _userItem2 = _interopRequireDefault(_userItem);
 	
-	var _signup = __webpack_require__(245);
+	var _signup = __webpack_require__(249);
 	
 	var _signup2 = _interopRequireDefault(_signup);
 	
-	var _buy = __webpack_require__(243);
+	var _buy = __webpack_require__(246);
 	
 	var _buy2 = _interopRequireDefault(_buy);
 	
-	var _home = __webpack_require__(246);
+	var _home = __webpack_require__(250);
 	
 	var _home2 = _interopRequireDefault(_home);
 	
@@ -26643,6 +26643,7 @@
 			});
 		},
 		render: function render() {
+			username = username || "";
 			return _react2.default.createElement(
 				'div',
 				null,
@@ -26705,6 +26706,15 @@
 							{ to: '/login' },
 							'Login'
 						)
+					),
+					_react2.default.createElement(
+						'li',
+						{ className: 'col-md-3' },
+						_react2.default.createElement(
+							_navlink2.default,
+							{ to: '/signup' },
+							'signup'
+						)
 					)
 				),
 				this.props.children
@@ -26753,11 +26763,11 @@
 	
 	var _userInventory2 = _interopRequireDefault(_userInventory);
 	
-	var _submission = __webpack_require__(239);
+	var _submission = __webpack_require__(241);
 	
 	var _submission2 = _interopRequireDefault(_submission);
 	
-	var _transactions = __webpack_require__(249);
+	var _transactions = __webpack_require__(242);
 	
 	var _transactions2 = _interopRequireDefault(_transactions);
 	
@@ -26822,7 +26832,7 @@
 	
 	var _userItem2 = _interopRequireDefault(_userItem);
 	
-	var _lodash = __webpack_require__(247);
+	var _lodash = __webpack_require__(239);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
@@ -27071,515 +27081,6 @@
 
 /***/ },
 /* 239 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var Submission = _react2.default.createClass({
-		displayName: "Submission",
-	
-		render: function render() {
-			return _react2.default.createElement(
-				"div",
-				null,
-				_react2.default.createElement(
-					"h3",
-					null,
-					" Submit new Item: "
-				),
-				_react2.default.createElement(
-					"form",
-					{ method: "post", action: "/profile/" },
-					_react2.default.createElement("input", { type: "hidden", name: "csrfmiddlewaretoken", value: cookie }),
-					_react2.default.createElement(
-						"label",
-						null,
-						"Item: "
-					),
-					_react2.default.createElement("input", { id: "item", name: "item", type: "text" }),
-					_react2.default.createElement(
-						"label",
-						null,
-						"Qty: "
-					),
-					_react2.default.createElement("input", { id: "qty", name: "qty" }),
-					_react2.default.createElement("input", { type: "hidden", name: "action", value: "new" }),
-					_react2.default.createElement("input", { type: "submit", className: "button", value: "Submit" })
-				)
-			);
-		}
-	});
-	
-	module.exports = Submission;
-
-/***/ },
-/* 240 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(1);
-	var ReactDOM = __webpack_require__(33);
-	var FullInventory = __webpack_require__(241);
-	
-	var Main = React.createClass({
-		displayName: 'Main',
-	
-	
-		render: function render() {
-			console.log(marketItems);
-	
-			//return inventory of items
-			return React.createElement(
-				'div',
-				null,
-				React.createElement(
-					'h1',
-					null,
-					'The Market'
-				),
-				React.createElement(FullInventory, null),
-				this.props.children
-			);
-		}
-	});
-	
-	module.exports = Main;
-
-/***/ },
-/* 241 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(170);
-	
-	var _reactRouter2 = _interopRequireDefault(_reactRouter);
-	
-	var _fullItem = __webpack_require__(242);
-	
-	var _fullItem2 = _interopRequireDefault(_fullItem);
-	
-	var _buy = __webpack_require__(243);
-	
-	var _buy2 = _interopRequireDefault(_buy);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var postUrl = '/profile/modify_item/';
-	
-	var FullInventory = _react2.default.createClass({
-		displayName: 'FullInventory',
-	
-		getInitialState: function getInitialState() {
-			return {
-				nowShowing: marketItems,
-				editing: null,
-				buying: null,
-				newItem: ''
-			};
-		},
-		//save a 'buy' transaction
-		save: function save(trans, buyAmount) {
-			//append new buyAmount to the trans object and save it
-			trans['buyAmount'] = buyAmount;
-			trans['action'] = 'buy';
-			$.post(postUrl, trans, function () {
-				console.log("buy success!");
-			});
-		},
-		edit: function edit(item) {
-			this.setState({ editing: item.id });
-		},
-		buy: function buy(item) {
-			this.setState({ buying: item.id });
-		},
-		render: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				marketItems.map(function (item) {
-					var address = "/profile/" + item.name;
-					return _react2.default.createElement(
-						'div',
-						{ key: item.id },
-						_react2.default.createElement(_fullItem2.default, {
-							name: item.name,
-							amount: item.amount,
-							creator: item.creator,
-							street: item.street,
-							state: item.state,
-							onBuy: this.buy.bind(this, item),
-							editing: this.state.editing === item.id
-						}),
-						_react2.default.createElement(_buy2.default, {
-							name: item.name,
-							buying: this.state.buying === item.id,
-							onSave: this.save.bind(this, item)
-						})
-					);
-				}, this)
-			);
-		}
-	});
-	
-	module.exports = FullInventory;
-
-/***/ },
-/* 242 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _classnames = __webpack_require__(238);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	var _reactRouter = __webpack_require__(170);
-	
-	var _navlink = __webpack_require__(234);
-	
-	var _navlink2 = _interopRequireDefault(_navlink);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var ESCAPE_KEY = 27;
-	//library for setting class names for DOM elements by referring it to a boolean value
-	
-	var ENTER_KEY = 13;
-	
-	var FullItem = _react2.default.createClass({
-		displayName: 'FullItem',
-	
-		getInitialState: function getInitialState() {
-			return { editText: this.props.name };
-		},
-		handleBuy: function handleBuy() {
-			this.props.onBuy();
-		},
-		handleChange: function handleChange(event) {
-			if (this.props.editing) {
-				this.setState({ editText: event.target.value });
-			}
-		},
-		handleKeyDown: function handleKeyDown(event) {
-			if (event.which === ESCAPE_KEY) {
-				this.setState({ editText: this.props.todo.title });
-				this.props.onCancel(event);
-			} else if (event.which === ENTER_KEY) {
-				this.handleSubmit(event);
-			}
-		},
-		handleSubmit: function handleSubmit(event) {
-			var val = this.state.editText.trim();
-			if (val) {
-				this.props.onSave(val);
-				this.setState({ editText: val });
-			} else {
-				//this.props.onDestroy()
-			}
-		},
-		componentDidUpdate: function componentDidUpdate(prevProps) {
-			if (!prevProps.editing && this.props.editing) {
-				var node = ReactDOM.findDOMNode(this.refs.editField);
-				node.focus();
-				node.setSelectionRange(node.value.length, node.value.length);
-			}
-		},
-		render: function render() {
-			var link = '/main/' + this.props.name;
-			return _react2.default.createElement(
-				'div',
-				{ className: 'view' },
-				_react2.default.createElement(
-					'b',
-					null,
-					'item: ',
-					this.state.editText
-				),
-				_react2.default.createElement(
-					'p',
-					null,
-					'amount: ',
-					this.props.amount
-				),
-				_react2.default.createElement(
-					'p',
-					null,
-					' user: ',
-					this.props.creator
-				),
-				_react2.default.createElement(
-					'p',
-					null,
-					' ',
-					this.props.street,
-					', ',
-					this.props.state
-				),
-				_react2.default.createElement('input', { type: 'button', value: 'Trade/Buy', onClick: this.handleBuy })
-			);
-		}
-	});
-	
-	module.exports = FullItem;
-
-/***/ },
-/* 243 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _classnames = __webpack_require__(238);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var ESCAPE_KEY = 27;
-	var ENTER_KEY = 13;
-	
-	function isInt(value) {
-		if (isNaN(value)) {
-			return false;
-		}
-		var x = parseFloat(value);
-		return (x | 0) === x;
-	}
-	
-	var Buy = _react2.default.createClass({
-		displayName: 'Buy',
-	
-		getInitialState: function getInitialState() {
-			return { buyAmount: null };
-		},
-		handleChange: function handleChange(e) {
-			if (isInt(e.target.value)) {
-				this.setState({ buyAmount: e.target.value });
-			} else {
-				console.log('Not a number');
-			}
-		},
-		handleSubmit: function handleSubmit(e) {
-			var val = this.state.buyAmount.trim();
-			this.props.onSave(val);
-		},
-		render: function render() {
-			return _react2.default.createElement(
-				'div',
-				{ className: (0, _classnames2.default)('buy', {
-						buying: this.props.buying
-					}) },
-				_react2.default.createElement(
-					'b',
-					null,
-					'To Buy: ',
-					this.props.name
-				),
-				_react2.default.createElement('input', { placeholder: 'amount', name: 'buyAmount', onChange: this.handleChange }),
-				_react2.default.createElement('input', { type: 'submit', value: 'Submit', onClick: this.handleSubmit })
-			);
-		}
-	});
-	
-	module.exports = Buy;
-
-/***/ },
-/* 244 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _reactRouter = __webpack_require__(170);
-	
-	var React = __webpack_require__(1);
-	
-	
-	var Login = React.createClass({
-		displayName: 'Login',
-	
-		render: function render() {
-			return React.createElement(
-				'div',
-				null,
-				React.createElement(
-					'form',
-					{ method: 'post', action: '/login' },
-					React.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie }),
-					React.createElement(
-						'b',
-						null,
-						'Account Name '
-					),
-					React.createElement('input', { id: 'username', name: 'username', type: 'text',
-						placeholder: 'Your account name',
-						autoComplete: 'off' }),
-					React.createElement('br', null),
-					React.createElement(
-						'b',
-						null,
-						'Password '
-					),
-					React.createElement('input', { id: 'password', name: 'password', type: 'password',
-						placeholder: 'Your password',
-						autoComplete: 'off' }),
-					React.createElement('input', { type: 'submit', 'class': 'button', value: 'Log In' }),
-					React.createElement('br', null),
-					React.createElement(
-						_reactRouter.Link,
-						{ to: '/signup/' },
-						'No Account? Sign Up'
-					)
-				)
-			);
-		}
-	});
-	
-	module.exports = Login;
-
-/***/ },
-/* 245 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var SignUp = _react2.default.createClass({
-		displayName: 'SignUp',
-	
-		handleSubmit: function handleSubmit() {
-			var password = document.getElementById('password').value;
-			var password2 = document.getElementById('password2').value;
-			if (password !== password2) {
-				console.log(password2);
-				alert("Passwords didn't match man");
-			} else {
-				var username = document.getElementById('username').value;
-				var data = {
-					'username': username,
-					'password': password
-				};
-				$.post('/signup/', data, function () {
-					console.log('signup success');
-				});
-			}
-		},
-		render: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'h2',
-					null,
-					'Sign Up '
-				),
-				_react2.default.createElement(
-					'form',
-					{ method: 'post', action: '/signup/' },
-					_react2.default.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie }),
-					_react2.default.createElement(
-						'b',
-						null,
-						'Account Name '
-					),
-					_react2.default.createElement('input', { id: 'username', name: 'username', type: 'text',
-						placeholder: 'Your account name',
-						autocomplete: 'off' }),
-					_react2.default.createElement('br', null),
-					_react2.default.createElement(
-						'b',
-						null,
-						'Password '
-					),
-					_react2.default.createElement('input', { id: 'password', name: 'password', type: 'password',
-						placeholder: 'Your password',
-						autocomplete: 'off' }),
-					_react2.default.createElement('br', null),
-					_react2.default.createElement(
-						'b',
-						null,
-						'Password again '
-					),
-					_react2.default.createElement('input', { id: 'password2', name: 'password2', type: 'password',
-						placeholder: 'Type your password again',
-						autocomplete: 'off' }),
-					_react2.default.createElement('input', { type: 'submit', 'class': 'button', value: 'Submit', onClick: this.handleSubmit })
-				)
-			);
-		}
-	});
-	
-	module.exports = SignUp;
-
-/***/ },
-/* 246 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(170);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = _react2.default.createClass({
-		displayName: 'home',
-		render: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'h2',
-					null,
-					'Don\'t let the fruit on your tree go to waste.'
-				),
-				_react2.default.createElement(
-					'b',
-					null,
-					'The Fruit Exchange is a marketplace for homegrown fruits and produce from your backyard.'
-				),
-				_react2.default.createElement('br', null),
-				_react2.default.createElement(
-					_reactRouter.Link,
-					{ to: '/signup/' },
-					'No Account? Sign Up'
-				)
-			);
-		}
-	});
-
-/***/ },
-/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -43987,10 +43488,10 @@
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(248)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(240)(module), (function() { return this; }())))
 
 /***/ },
-/* 248 */
+/* 240 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -44006,7 +43507,56 @@
 
 
 /***/ },
-/* 249 */
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var Submission = _react2.default.createClass({
+		displayName: "Submission",
+	
+		render: function render() {
+			return _react2.default.createElement(
+				"div",
+				null,
+				_react2.default.createElement(
+					"h3",
+					null,
+					" Submit new Item: "
+				),
+				_react2.default.createElement(
+					"form",
+					{ method: "post", action: "/profile/" },
+					_react2.default.createElement("input", { type: "hidden", name: "csrfmiddlewaretoken", value: cookie }),
+					_react2.default.createElement(
+						"label",
+						null,
+						"Item: "
+					),
+					_react2.default.createElement("input", { id: "item", name: "item", type: "text" }),
+					_react2.default.createElement(
+						"label",
+						null,
+						"Qty: "
+					),
+					_react2.default.createElement("input", { id: "qty", name: "qty" }),
+					_react2.default.createElement("input", { type: "hidden", name: "action", value: "new" }),
+					_react2.default.createElement("input", { type: "submit", className: "button", value: "Submit" })
+				)
+			);
+		}
+	});
+	
+	module.exports = Submission;
+
+/***/ },
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44015,7 +43565,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _lodash = __webpack_require__(247);
+	var _lodash = __webpack_require__(239);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
@@ -44130,7 +43680,344 @@
 	module.exports = Transactions;
 
 /***/ },
-/* 250 */
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(33);
+	var FullInventory = __webpack_require__(244);
+	
+	var Main = React.createClass({
+		displayName: 'Main',
+	
+	
+		render: function render() {
+			console.log(marketItems);
+	
+			//return inventory of items
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'h1',
+					null,
+					'The Market'
+				),
+				React.createElement(FullInventory, null),
+				this.props.children
+			);
+		}
+	});
+	
+	module.exports = Main;
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(170);
+	
+	var _reactRouter2 = _interopRequireDefault(_reactRouter);
+	
+	var _fullItem = __webpack_require__(245);
+	
+	var _fullItem2 = _interopRequireDefault(_fullItem);
+	
+	var _buy = __webpack_require__(246);
+	
+	var _buy2 = _interopRequireDefault(_buy);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var postUrl = '/profile/modify_item/';
+	
+	var FullInventory = _react2.default.createClass({
+		displayName: 'FullInventory',
+	
+		getInitialState: function getInitialState() {
+			return {
+				nowShowing: marketItems,
+				editing: null,
+				buying: null,
+				newItem: ''
+			};
+		},
+		//save a 'buy' transaction
+		save: function save(trans, buyAmount) {
+			//append new buyAmount to the trans object and save it
+			trans['buyAmount'] = buyAmount;
+			trans['action'] = 'buy';
+			$.post(postUrl, trans, function () {
+				console.log("buy success!");
+			});
+		},
+		edit: function edit(item) {
+			this.setState({ editing: item.id });
+		},
+		buy: function buy(item) {
+			this.setState({ buying: item.id });
+		},
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				marketItems.map(function (item) {
+					var address = "/profile/" + item.name;
+					return _react2.default.createElement(
+						'div',
+						{ key: item.id },
+						_react2.default.createElement(_fullItem2.default, {
+							name: item.name,
+							amount: item.amount,
+							creator: item.creator,
+							street: item.street,
+							state: item.state,
+							onBuy: this.buy.bind(this, item),
+							editing: this.state.editing === item.id
+						}),
+						_react2.default.createElement(_buy2.default, {
+							name: item.name,
+							buying: this.state.buying === item.id,
+							onSave: this.save.bind(this, item)
+						})
+					);
+				}, this)
+			);
+		}
+	});
+	
+	module.exports = FullInventory;
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _classnames = __webpack_require__(238);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	var _reactRouter = __webpack_require__(170);
+	
+	var _navlink = __webpack_require__(234);
+	
+	var _navlink2 = _interopRequireDefault(_navlink);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ESCAPE_KEY = 27;
+	//library for setting class names for DOM elements by referring it to a boolean value
+	
+	var ENTER_KEY = 13;
+	
+	var FullItem = _react2.default.createClass({
+		displayName: 'FullItem',
+	
+		getInitialState: function getInitialState() {
+			return { editText: this.props.name };
+		},
+		handleBuy: function handleBuy() {
+			this.props.onBuy();
+		},
+		handleChange: function handleChange(event) {
+			if (this.props.editing) {
+				this.setState({ editText: event.target.value });
+			}
+		},
+		handleKeyDown: function handleKeyDown(event) {
+			if (event.which === ESCAPE_KEY) {
+				this.setState({ editText: this.props.todo.title });
+				this.props.onCancel(event);
+			} else if (event.which === ENTER_KEY) {
+				this.handleSubmit(event);
+			}
+		},
+		handleSubmit: function handleSubmit(event) {
+			var val = this.state.editText.trim();
+			if (val) {
+				this.props.onSave(val);
+				this.setState({ editText: val });
+			} else {
+				//this.props.onDestroy()
+			}
+		},
+		componentDidUpdate: function componentDidUpdate(prevProps) {
+			if (!prevProps.editing && this.props.editing) {
+				var node = ReactDOM.findDOMNode(this.refs.editField);
+				node.focus();
+				node.setSelectionRange(node.value.length, node.value.length);
+			}
+		},
+		render: function render() {
+			var link = '/main/' + this.props.name;
+			return _react2.default.createElement(
+				'div',
+				{ className: 'view' },
+				_react2.default.createElement(
+					'b',
+					null,
+					'item: ',
+					this.state.editText
+				),
+				_react2.default.createElement(
+					'p',
+					null,
+					'amount: ',
+					this.props.amount
+				),
+				_react2.default.createElement(
+					'p',
+					null,
+					' user: ',
+					this.props.creator
+				),
+				_react2.default.createElement(
+					'p',
+					null,
+					' ',
+					this.props.street,
+					', ',
+					this.props.state
+				),
+				_react2.default.createElement('input', { type: 'button', value: 'Trade/Buy', onClick: this.handleBuy })
+			);
+		}
+	});
+	
+	module.exports = FullItem;
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _classnames = __webpack_require__(238);
+	
+	var _classnames2 = _interopRequireDefault(_classnames);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var ESCAPE_KEY = 27;
+	var ENTER_KEY = 13;
+	
+	function isInt(value) {
+		if (isNaN(value)) {
+			return false;
+		}
+		var x = parseFloat(value);
+		return (x | 0) === x;
+	}
+	
+	var Buy = _react2.default.createClass({
+		displayName: 'Buy',
+	
+		getInitialState: function getInitialState() {
+			return { buyAmount: null };
+		},
+		handleChange: function handleChange(e) {
+			if (isInt(e.target.value)) {
+				this.setState({ buyAmount: e.target.value });
+			} else {
+				console.log('Not a number');
+			}
+		},
+		handleSubmit: function handleSubmit(e) {
+			var val = this.state.buyAmount.trim();
+			this.props.onSave(val);
+		},
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				{ className: (0, _classnames2.default)('buy', {
+						buying: this.props.buying
+					}) },
+				_react2.default.createElement(
+					'b',
+					null,
+					'To Buy: ',
+					this.props.name
+				),
+				_react2.default.createElement('input', { placeholder: 'amount', name: 'buyAmount', onChange: this.handleChange }),
+				_react2.default.createElement('input', { type: 'submit', value: 'Submit', onClick: this.handleSubmit })
+			);
+		}
+	});
+	
+	module.exports = Buy;
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _reactRouter = __webpack_require__(170);
+	
+	var React = __webpack_require__(1);
+	
+	
+	var Login = React.createClass({
+		displayName: 'Login',
+	
+		render: function render() {
+			return React.createElement(
+				'div',
+				null,
+				React.createElement(
+					'form',
+					{ method: 'post', action: '/login' },
+					React.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie }),
+					React.createElement(
+						'b',
+						null,
+						'Account Name '
+					),
+					React.createElement('input', { id: 'username', name: 'username', type: 'text',
+						placeholder: 'Your account name',
+						autoComplete: 'off' }),
+					React.createElement('br', null),
+					React.createElement(
+						'b',
+						null,
+						'Password '
+					),
+					React.createElement('input', { id: 'password', name: 'password', type: 'password',
+						placeholder: 'Your password',
+						autoComplete: 'off' }),
+					React.createElement('input', { type: 'submit', 'class': 'button', value: 'Log In' }),
+					React.createElement('br', null),
+					React.createElement(
+						_reactRouter.Link,
+						{ to: '/signup/' },
+						'No Account? Sign Up'
+					)
+				)
+			);
+		}
+	});
+	
+	module.exports = Login;
+
+/***/ },
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44154,6 +44041,129 @@
 	});
 	
 	module.exports = Logout;
+
+/***/ },
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var SignUp = _react2.default.createClass({
+		displayName: 'SignUp',
+	
+		handleSubmit: function handleSubmit() {
+			var password = document.getElementById('password').value;
+			var password2 = document.getElementById('password2').value;
+			if (password !== password2) {
+				console.log(password2);
+				alert("Passwords didn't match man");
+			} else {
+				var username = document.getElementById('username').value;
+				var data = {
+					'username': username,
+					'password': password
+				};
+				/*			$.post('/signup/', data, function() {
+	   				console.log('signup success')
+	   			})*/
+			}
+		},
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'h2',
+					null,
+					'Sign Up '
+				),
+				_react2.default.createElement(
+					'form',
+					{ method: 'post', action: '/signup/' },
+					_react2.default.createElement('input', { type: 'hidden', name: 'csrfmiddlewaretoken', value: cookie }),
+					_react2.default.createElement(
+						'b',
+						null,
+						'Account Name '
+					),
+					_react2.default.createElement('input', { id: 'username', name: 'username', type: 'text',
+						placeholder: 'Your account name',
+						autocomplete: 'off' }),
+					_react2.default.createElement('br', null),
+					_react2.default.createElement(
+						'b',
+						null,
+						'Password '
+					),
+					_react2.default.createElement('input', { id: 'password', name: 'password', type: 'password',
+						placeholder: 'Your password',
+						autocomplete: 'off' }),
+					_react2.default.createElement('br', null),
+					_react2.default.createElement(
+						'b',
+						null,
+						'Password again '
+					),
+					_react2.default.createElement('input', { id: 'password2', name: 'password2', type: 'password',
+						placeholder: 'Type your password again',
+						autocomplete: 'off' }),
+					_react2.default.createElement('input', { type: 'submit', 'class': 'button', value: 'Submit', onClick: this.handleSubmit })
+				)
+			);
+		}
+	});
+	
+	module.exports = SignUp;
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(170);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = _react2.default.createClass({
+		displayName: 'home',
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'h2',
+					null,
+					'Don\'t let the fruit on your tree go to waste.'
+				),
+				_react2.default.createElement(
+					'b',
+					null,
+					'The Fruit Exchange is a marketplace for homegrown fruits and produce from your backyard.'
+				),
+				_react2.default.createElement('br', null),
+				_react2.default.createElement(
+					_reactRouter.Link,
+					{ to: '/signup/' },
+					'No Account? Sign Up'
+				)
+			);
+		}
+	});
 
 /***/ }
 /******/ ]);
